@@ -1,0 +1,55 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu Thymeleaf</title>
+
+    <!-- CSS Bootstrap -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow-lg border-0">
+                <div class="card-body d-flex flex-column flex-md-row align-items-center gap-4">
+
+                    <!-- Logo -->
+                    <div class="flex-shrink-0">
+                        <img src="https://devmaster.edu.vn/images/logo.png"
+                             alt="Devmaster Academy"
+                             class="img-fluid"
+                             style="max-width: 140px;">
+                    </div>
+
+                    <!-- Nội dung -->
+                    <div class="flex-grow-1">
+                        <h1 class="h3 fw-bold mb-2"
+                            th:text="${@environment.getProperty('app.name')}">
+                        </h1>
+                        <p class="text-muted mb-4"
+                           th:text="${@environment.getProperty('app.welcome.message')}">
+                        </p>
+
+                        <a th:href="@{/profile}"
+                           class="btn btn-primary btn-lg px-4">
+                            Devmaster Profile
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS Bootstrap (nếu có) -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
