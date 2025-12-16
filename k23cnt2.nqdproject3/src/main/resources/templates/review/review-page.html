@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ?: 'Đánh giá sản phẩm'">Đánh giá sản phẩm</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" th:href="@{/css/review-page.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+</head>
+<body>
+
+<!-- HEADER -->
+<div th:replace="layout/header :: header"></div>
+
+<div class="rv-page">
+    <div class="rv-container">
+        <div class="rv-header">
+            <h1>Đánh giá sản phẩm</h1>
+            <p>Hãy chia sẻ cảm nhận của bạn về những chiếc bánh đã mua, để người khác dễ chọn hơn nha 🥮</p>
+        </div>
+
+        <!-- Thông báo -->
+        <div th:if="${successMessage}" class="rv-alert rv-alert--success"
+             th:text="${successMessage}"></div>
+
+        <div th:if="${errorMessage}" class="rv-alert rv-alert--error"
+             th:text="${errorMessage}"></div>
+
+        <!-- Nếu chưa mua gì -->
+        <div th:if="${#lists.isEmpty(purchasedProducts)}"
+             class="rv-empty">
+            Bạn chưa có sản phẩm nào để đánh giá. Hãy đặt một chiếc bánh trước đã nhé!
+        </div>
+
+        <!-- Danh sách sản phẩm đã mua -->
+        <div class="rv-grid" th:if="${!#lists.isEmpty(purchasedProducts)}">
+
+            <th:block th:each="p : ${purchasedProducts}">
+                <th:block th:with="review=${reviewMap[p.id]}">
+                    <form th:action="@{/favorites/save}"
+                          method="post"
+                          class="rv-card">
+
+                        <input type="hidden" name="productId" th:value="${p.id}"/>
+
+                        <!-- Ảnh -->
+                        <div class="rv-card-image">
+                            <img th:src="${p.imageUrl}" alt="Ảnh sản phẩm">
+                        </div>
+
+                        <!-- Nội dung -->
+                        <div class="rv-card-body">
+                            <div class="rv-product-name" th:text="${p.name}">
+                                Tên sản phẩm
+                            </div>
+                            <div class="rv-product-price"
+                                 th:text="${#numbers.formatDecimal(p.price, 0, 'POINT', 0, 'POINT')} + ' đ'">
+                                120.000 đ
+                            </div>
+
+                            <!-- Rating sao -->
+                            <div class="rv-stars">
+                                <input type="radio"
+                                       th:id="'star5-' + ${p.id}"
+                                       name="rating" value="5"
+                                       th:checked="${review != null and review.rating == 5}"/>
+                                <label th:for="'star5-' + ${p.id}">
+                                    <i class="fa-solid fa-star"></i>
+                                </label>
+
+                                <input type="radio"
+                                       th:id="'star4-' + ${p.id}"
+                                       name="rating" value="4"
+                                       th:checked="${review != null and review.rating == 4}"/>
+                                <label th:for="'star4-' + ${p.id}">
+                                    <i class="fa-solid fa-star"></i>
+                                </label>
+
+                                <input type="radio"
+                                       th:id="'star3-' + ${p.id}"
+                                       name="rating" value="3"
+                                       th:checked="${review != null and review.rating == 3}"/>
+                                <label th:for="'star3-' + ${p.id}">
+                                    <i class="fa-solid fa-star"></i>
+                                </label>
+
+                                <input type="radio"
+                                       th:id="'star2-' + ${p.id}"
+                                       name="rating" value="2"
+                                       th:checked="${review != null and review.rating == 2}"/>
+                                <label th:for="'star2-' + ${p.id}">
+                                    <i class="fa-solid fa-star"></i>
+                                </label>
+
+                                <input type="radio"
+                                       th:id="'star1-' + ${p.id}"
+                                       name="rating" value="1"
+                                       th:checked="${review != null and review.rating == 1}"/>
+                                <label th:for="'star1-' + ${p.id}">
+                                    <i class="fa-solid fa-star"></i>
+                                </label>
+                            </div>
+
+                            <!-- Comment -->
+                            <div class="rv-comment-group">
+                                <textarea name="comment"
+                                          class="rv-textarea"
+                                          rows="3"
+                                          placeholder="Chia sẻ cảm nhận của bạn về hương vị, độ ngọt, bao bì..."
+                                          th:text="${review != null ? review.comment : ''}"></textarea>
+                            </div>
+
+                            <div class="rv-actions">
+                                <button type="submit" class="rv-btn rv-btn-primary">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    <span th:text="${review != null ? 'Cập nhật đánh giá' : 'Gửi đánh giá'}">
+                                        Gửi đánh giá
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </th:block>
+            </th:block>
+
+        </div>
+    </div>
+</div>
+<div th:replace="~{layout/footer :: nqdFooterFragment}"></div>
+
+<script th:src="@{/js/header.js}"></script>
+<script th:src="@{/js/cart.js}"></script>
+</body>
+</html>

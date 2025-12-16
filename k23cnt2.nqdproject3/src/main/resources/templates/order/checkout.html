@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đặt hàng</title>
+
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/order-checkout.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+
+<div th:replace="~{layout/header :: header}"></div>
+
+<main class="nqd-checkout-page">
+    <section class="nqd-checkout-wrapper nqd-container">
+
+        <!-- Cột trái: Thông tin người nhận -->
+        <div class="nqd-checkout-left">
+            <h1 class="nqd-checkout-title">Thông tin đặt hàng</h1>
+
+            <!-- Thông báo nếu giỏ hàng trống -->
+            <p class="nqd-checkout-notice"
+               th:if="${#lists.isEmpty(cartItems)}">
+                Giỏ hàng của bạn đang trống, vui lòng thêm sản phẩm trước khi đặt hàng.
+            </p>
+
+            <form th:action="@{/checkout}"
+                  method="post"
+                  th:object="${orderForm}"
+                  class="nqd-checkout-form">
+
+                <div class="nqd-form-group">
+                    <label for="fullName">Họ và tên *</label>
+                    <input id="fullName" type="text" th:field="*{fullName}" required>
+                </div>
+
+                <div class="nqd-form-group">
+                    <label for="phone">Số điện thoại *</label>
+                    <input id="phone" type="text" th:field="*{phone}" required>
+                </div>
+
+                <div class="nqd-form-group">
+                    <label for="address">Địa chỉ nhận hàng *</label>
+                    <textarea id="address" th:field="*{address}" rows="3" required></textarea>
+                </div>
+
+                <div class="nqd-form-group">
+                    <label for="note">Ghi chú</label>
+                    <textarea id="note" th:field="*{note}" rows="3"
+                              placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi tới..."></textarea>
+                </div>
+
+                <div class="nqd-form-group">
+                    <label>Phương thức thanh toán</label>
+                    <div class="nqd-payment-options">
+                        <label>
+                            <input type="radio" th:field="*{paymentMethod}" value="COD" checked>
+                            Thanh toán khi nhận hàng (COD)
+                        </label>
+                        <label>
+                            <input type="radio" th:field="*{paymentMethod}" value="VNPAY">
+                            VNPay
+                        </label>
+                        <label>
+                            <input type="radio" th:field="*{paymentMethod}" value="MOMO">
+                            Momo
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit"
+                        class="nqd-btn nqd-btn-primary"
+                        th:disabled="${#lists.isEmpty(cartItems)}">
+                    Xác nhận đặt hàng
+                </button>
+            </form>
+        </div>
+
+        <!-- Cột phải: Tóm tắt đơn hàng -->
+        <aside class="nqd-checkout-right">
+            <h2 class="nqd-checkout-subtitle">Đơn hàng của bạn</h2>
+
+            <!-- Nếu giỏ trống -->
+            <div class="nqd-checkout-empty"
+                 th:if="${#lists.isEmpty(cartItems)}">
+                Giỏ hàng đang trống, hãy quay
+                <a th:href="@{/products}">lại trang sản phẩm</a>
+                để chọn bánh nhé.
+            </div>
+
+            <!-- Nếu có sản phẩm -->
+            <div th:if="${!#lists.isEmpty(cartItems)}">
+                <div class="nqd-summary-list">
+                    <div class="nqd-summary-header">
+                        <span>Sản phẩm</span>
+                        <span>Thành tiền</span>
+                    </div>
+
+                    <div class="nqd-summary-item"
+                         th:each="item : ${cartItems}">
+                        <div class="nqd-summary-name">
+                            <!-- NqdCartItemDto.name -->
+                            <span th:text="${item.name}">Tên bánh</span>
+                            <span class="nqd-summary-qty"
+                                  th:text="'x ' + ${item.quantity}">
+                                x 1
+                            </span>
+                        </div>
+                        <div class="nqd-summary-line"
+                             th:text="${#numbers.formatDecimal(item.subtotal,0,'POINT',0,'POINT')} + ' đ'">
+                            120.000 đ
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nqd-summary-total">
+                    <span>Tổng cộng</span>
+                    <!-- dùng grandTotal từ controller -->
+                    <span th:text="${#numbers.formatDecimal(grandTotal,0,'POINT',0,'POINT')} + ' đ'">
+                        0 đ
+                    </span>
+                </div>
+            </div>
+        </aside>
+
+    </section>
+</main>
+
+<div th:replace="~{layout/footer :: nqdFooterFragment}"></div>
+
+<script th:src="@{/js/header.js}"></script>
+</body>
+</html>

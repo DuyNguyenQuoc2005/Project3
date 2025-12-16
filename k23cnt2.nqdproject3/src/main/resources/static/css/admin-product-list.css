@@ -1,0 +1,199 @@
+/* ===== MAIN HEADER (có actions) - riêng cho trang có nút hành động ===== */
+.adm-main-header--with-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+/* ===== VÙNG NỘI DUNG CHÍNH CỦA TRANG LIST ===== */
+.adm-content {
+    margin-top: 16px;
+}
+
+.adm-table-wrapper {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    padding: 14px 16px;
+}
+
+/* ===== BẢNG SẢN PHẨM ===== */
+.adm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.adm-table thead th {
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid #eee;
+    background: #f9fafb;
+}
+
+.adm-table tbody td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f3f3f3;
+    vertical-align: middle;
+}
+
+.adm-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.adm-table-empty {
+    text-align: center;
+    padding: 16px 0;
+    color: #888;
+}
+
+/* ===== Ô ẢNH & TÊN SẢN PHẨM ===== */
+.adm-product-thumb-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adm-product-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.adm-product-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.adm-product-flags {
+    display: flex;
+    gap: 4px;
+}
+
+/* ===== BADGE / FLAG ===== */
+.adm-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.adm-badge--green {
+    background: #e2f8e9;
+    color: #27ae60;
+}
+
+.adm-badge--orange {
+    background: #fff2e2;
+    color: #e67e22;
+}
+
+.adm-badge--red {
+    background: #ffe5e5;
+    color: #c0392b;
+}
+
+.adm-badge--gray {
+    background: #ecf0f1;
+    color: #7f8c8d;
+}
+
+/* ===== TAG TRẠNG THÁI ===== */
+.adm-tag {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.adm-tag--success {
+    background: #e3f7eb;
+    color: #2ecc71;
+}
+
+.adm-tag--danger {
+    background: #fde2df;
+    color: #e74c3c;
+}
+
+/* ===== BUTTON TRONG ADMIN PRODUCT LIST ===== */
+.adm-main-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.adm-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    background: #ecf0f1;
+    color: #2c3e50;
+}
+
+.adm-btn i {
+    font-size: 12px;
+}
+
+.adm-btn:hover {
+    background: #dde2e6;
+}
+
+/* ===== PRIMARY BUTTON - PHIÊN BẢN ĐẸP (GIỐNG QUẢN LÝ NGƯỜI DÙNG) ===== */
+.adm-btn-primary {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: #fff;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 999px;
+    box-shadow: 0 6px 14px rgba(46, 204, 113, 0.35);
+    transition: all 0.25s ease;
+}
+
+/* icon trong nút */
+.adm-btn-primary i {
+    font-size: 13px;
+}
+
+/* hover: nổi lên nhẹ */
+.adm-btn-primary:hover {
+    background: linear-gradient(135deg, #27ae60, #219150);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(39, 174, 96, 0.45);
+}
+
+/* click: ấn xuống */
+.adm-btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.35);
+}
+
+
+.adm-btn-danger {
+    background: #fce0df;
+    color: #e74c3c;
+}
+
+.adm-btn-danger:hover {
+    background: #f8c8c5;
+}
+
+.adm-btn-sm {
+    padding: 4px 8px;
+    font-size: 11px;
+}
+/* ===== ACTIONS CANH TRÁI (GIỐNG QUẢN LÝ KHÁCH HÀNG) ===== */
+.adm-main-actions--left {
+    margin-top: 10px;
+}

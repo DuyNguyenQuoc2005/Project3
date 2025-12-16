@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ?: 'Quản lý góp ý'">Quản lý góp ý</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-feedback-list.css}">
+</head>
+<body>
+
+<div class="adm-wrapper">
+
+    <!-- NÚT MỞ / THU GỌN SIDEBAR -->
+    <div class="adm-menu-toggle"
+         onclick="document.querySelector('.adm-sidebar').classList.toggle('active');
+                  document.querySelector('.adm-wrapper').classList.toggle('sidebar-active');">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- ========== SIDEBAR CHUNG (GIỐNG DASHBOARD) ========== -->
+    <aside class="adm-sidebar">
+        <div class="adm-sidebar-inner">
+            <!-- Logo -->
+            <a th:href="@{/admin/dashboard}" class="adm-logo-row">
+                <div class="adm-logo-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="adm-logo-text">
+                    <span class="adm-logo-title">YUD ADMIN</span>
+                    <span class="adm-logo-sub">Dashboard</span>
+                </div>
+            </a>
+
+            <!-- Menu -->
+            <nav class="adm-menu">
+                <a th:href="@{/admin/dashboard}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div class="adm-menu-text">Tổng quan</div>
+                </a>
+
+                <!-- TRANG HIỆN TẠI: QUẢN LÝ SẢN PHẨM -->
+                <a th:href="@{/admin/products}" class="adm-menu-item ">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý sản phẩm</div>
+                </a>
+
+                <a th:href="@{/admin/customers}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý khách hàng</div>
+                </a>
+
+                <a th:href="@{/admin/accounts}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý Admin</div>
+                </a>
+
+                <a th:href="@{/admin/orders}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý đơn hàng</div>
+                </a>
+
+                <a th:href="@{/admin/feedbacks}" class="adm-menu-item adm-menu-item--active">
+                    <div class="adm-menu-icon">
+                        <i class="fa-regular fa-comment-dots"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý góp ý</div>
+                </a>
+            </nav>
+
+            <!-- Bottom -->
+            <div class="adm-sidebar-bottom">
+                <a th:href="@{/}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div class="adm-menu-text">Về trang bán hàng</div>
+                </a>
+
+                <a th:href="@{/account/logout}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <div class="adm-menu-text">Đăng xuất</div>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="adm-main">
+
+        <!-- Flash -->
+        <div th:if="${successMessage}" class="fb-alert fb-alert--success"
+             th:text="${successMessage}"></div>
+
+        <div th:if="${errorMessage}" class="fb-alert fb-alert--error"
+             th:text="${errorMessage}"></div>
+
+        <header class="adm-main-header">
+            <div>
+                <h1>Quản lý góp ý</h1>
+                <span class="adm-main-subtitle">
+                    Xem và quản lý các đánh giá sản phẩm của khách hàng
+                </span>
+            </div>
+        </header>
+
+        <section class="adm-content">
+            <div class="fb-table-wrapper">
+                <table class="fb-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Sản phẩm</th>
+                        <th>Khách hàng</th>
+                        <th>Đánh giá</th>
+                        <th>Nội dung</th>
+                        <th>Thời gian</th>
+                        <th style="width: 150px;">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:if="${#lists.isEmpty(reviews)}">
+                        <td colspan="7" class="fb-table-empty">
+                            Hiện chưa có góp ý nào.
+                        </td>
+                    </tr>
+
+                    <tr th:each="r : ${reviews}">
+                        <td th:text="${r.id}">1</td>
+
+                        <td>
+                            <div class="fb-product-name"
+                                 th:text="${r.product != null ? r.product.name : '---'}">
+                                Tên sản phẩm
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="fb-user-name"
+                                 th:text="${r.customer != null ? (r.customer.fullName != null && !r.customer.fullName.isEmpty() ? r.customer.fullName : r.customer.username) : '---'}">
+                                Khách hàng
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="fb-rating">
+                                <i class="fa-solid fa-star fb-rating-star"
+                                   th:each="i : ${#numbers.sequence(1, r.rating)}"></i>
+                                <span class="fb-rating-text" th:text="${r.rating} + ' / 5'">5 / 5</span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="fb-comment"
+                                  th:text="${#strings.length(r.comment) > 80 ?
+                                      #strings.substring(r.comment, 0, 80) + '...' :
+                                      (r.comment ?: '')}">
+                                Nội dung góp ý
+                            </span>
+                        </td>
+
+                        <td th:text="${#temporals.format(r.createdAt, 'dd/MM/yyyy HH:mm')}"
+                            class="fb-time">
+                            12/12/2025 11:30
+                        </td>
+
+                        <td>
+                            <a th:href="@{/admin/feedbacks/edit/{id}(id=${r.id})}"
+                               class="fb-btn fb-btn--sm">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                Sửa
+                            </a>
+
+                            <a th:href="@{/admin/feedbacks/delete/{id}(id=${r.id})}"
+                               class="fb-btn fb-btn--sm fb-btn--danger"
+                               onclick="return confirm('Xoá góp ý này?');">
+                                <i class="fa-regular fa-trash-can"></i>
+                                Xoá
+                            </a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

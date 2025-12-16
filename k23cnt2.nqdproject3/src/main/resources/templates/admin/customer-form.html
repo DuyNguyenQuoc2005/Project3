@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ?: 'Quản lý khách hàng'">Quản lý khách hàng</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-customer-form.css}">
+</head>
+<body>
+
+<div class="adm-wrapper">
+
+    <!-- NÚT MỞ / THU GỌN SIDEBAR -->
+    <div class="adm-menu-toggle"
+         onclick="document.querySelector('.adm-sidebar').classList.toggle('active');
+                  document.querySelector('.adm-wrapper').classList.toggle('sidebar-active');">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- ========== SIDEBAR CHUNG (GIỐNG DASHBOARD) ========== -->
+    <aside class="adm-sidebar">
+        <div class="adm-sidebar-inner">
+            <!-- Logo -->
+            <a th:href="@{/admin/dashboard}" class="adm-logo-row">
+                <div class="adm-logo-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="adm-logo-text">
+                    <span class="adm-logo-title">YUD ADMIN</span>
+                    <span class="adm-logo-sub">Dashboard</span>
+                </div>
+            </a>
+
+            <!-- Menu -->
+            <nav class="adm-menu">
+                <a th:href="@{/admin/dashboard}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div class="adm-menu-text">Tổng quan</div>
+                </a>
+
+                <!-- TRANG HIỆN TẠI: QUẢN LÝ SẢN PHẨM -->
+                <a th:href="@{/admin/products}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý sản phẩm</div>
+                </a>
+
+                <a th:href="@{/admin/customers}" class="adm-menu-item adm-menu-item--active">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý khách hàng</div>
+                </a>
+
+                <a th:href="@{/admin/accounts}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý Admin</div>
+                </a>
+
+                <a th:href="@{/admin/orders}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý đơn hàng</div>
+                </a>
+
+                <a th:href="@{/admin/feedbacks}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-regular fa-comment-dots"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý góp ý</div>
+                </a>
+            </nav>
+
+            <!-- Bottom -->
+            <div class="adm-sidebar-bottom">
+                <a th:href="@{/}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div class="adm-menu-text">Về trang bán hàng</div>
+                </a>
+
+                <a th:href="@{/account/logout}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <div class="adm-menu-text">Đăng xuất</div>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="adm-main">
+
+        <header class="adm-main-header">
+            <div>
+                <h1 th:text="${pageTitle}">Khách hàng</h1>
+                <span class="adm-main-subtitle">Thông tin tài khoản khách hàng</span>
+            </div>
+        </header>
+
+        <section class="cust-content-form">
+            <form th:action="@{/admin/customers/save}"
+                  th:object="${customer}"
+                  method="post"
+                  class="cust-form">
+
+                <input type="hidden" th:field="*{id}"/>
+
+                <!-- Tài khoản -->
+                <div class="cust-form-group">
+                    <label class="cust-label">Tên đăng nhập</label>
+                    <input type="text" th:field="*{username}" class="cust-input"
+                           th:attr="readonly=${customer.id != null}"
+                           placeholder="username">
+                    <span class="cust-hint" th:if="${customer.id != null}">
+                        Không thể đổi tên đăng nhập.
+                    </span>
+                </div>
+
+                <!-- Mật khẩu -->
+                <div class="cust-form-group">
+                    <label class="cust-label">Mật khẩu</label>
+                    <input type="password" th:field="*{password}" class="cust-input"
+                           placeholder="Nhập mật khẩu hoặc để trống nếu không đổi">
+                    <span class="cust-hint" th:if="${customer.id != null}">
+                        Để trống nếu không muốn đổi mật khẩu.
+                    </span>
+                </div>
+
+                <div class="cust-form-row">
+                    <div class="cust-form-group">
+                        <label class="cust-label">Họ tên</label>
+                        <input type="text" th:field="*{fullName}" class="cust-input">
+                    </div>
+
+                    <div class="cust-form-group">
+                        <label class="cust-label">Điện thoại</label>
+                        <input type="text" th:field="*{phone}" class="cust-input">
+                    </div>
+                </div>
+
+                <div class="cust-form-row">
+                    <div class="cust-form-group">
+                        <label class="cust-label">Email</label>
+                        <input type="email" th:field="*{email}" class="cust-input">
+                    </div>
+
+                    <div class="cust-form-group">
+                        <label class="cust-label">Trạng thái</label>
+
+                        <label class="cust-toggle">
+                            <input type="checkbox" th:field="*{active}" class="cust-toggle-input">
+
+                            <span class="cust-toggle-track">
+                                <span class="cust-toggle-thumb"></span>
+
+                                <!-- Text ON -->
+                                <span class="cust-toggle-text cust-toggle-text--on">Hoạt động</span>
+
+                                <!-- Text OFF -->
+                                <span class="cust-toggle-text cust-toggle-text--off">Khoá</span>
+                            </span>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="cust-form-group">
+                    <label class="cust-label">Địa chỉ</label>
+                    <textarea th:field="*{address}" class="cust-textarea" rows="2"></textarea>
+                </div>
+
+                <div class="cust-form-actions">
+                    <button type="submit" class="cust-btn cust-btn-primary cust-btn-lg">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Lưu khách hàng</span>
+                    </button>
+
+                    <a th:href="@{/admin/customers}" class="cust-btn cust-btn-secondary">
+                        Hủy và quay lại
+                    </a>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

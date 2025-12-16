@@ -1,0 +1,228 @@
+/* Nền chung trang chi tiết */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff7e6;
+}
+
+/* Bọc ngoài để canh giữa phần chi tiết */
+.nqd-detail-page {
+    padding: 40px 0 60px;
+}
+
+
+/* ================= KHỐI CHI TIẾT ================= */
+
+/* Khối chi tiết: 2 cột */
+.nqd-detail {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+    gap: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+}
+
+/* Cột trái */
+.nqd-detail-left {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 25px;
+    align-items: flex-start;
+}
+
+/* Ảnh sản phẩm */
+.nqd-img-box img {
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Thông tin */
+.nqd-info {
+    max-width: 100%;
+}
+
+.nqd-detail-title {
+    font-size: 24px;
+    margin: 0 0 12px;
+    color: #333;
+}
+
+.nqd-detail-text {
+    margin: 4px 0;
+    color: #444;
+    font-size: 14px;
+}
+
+.nqd-price {
+    margin: 14px 0;
+    font-size: 16px;
+}
+
+.nqd-price span {
+    color: #c0392b;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.nqd-short-desc {
+    margin: 10px 0 20px;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Số lượng */
+.nqd-quantity-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.nqd-qty-label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.nqd-qty-control {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.nqd-qty-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    color: #333;
+}
+
+.nqd-qty-btn:hover {
+    background: #f2f2f2;
+}
+
+#qtyInput {
+    width: 55px;
+    height: 40px;
+    border: none;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    outline: none;
+}
+
+/* Nút hành động */
+.nqd-detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
+    margin-top: 4px;
+}
+
+.nqd-btn {
+    min-width: 150px;
+    padding: 11px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    color: #fff;
+}
+
+.nqd-btn-cart {
+    background: #4a4a4a;
+}
+
+.nqd-btn-cart:hover {
+    background: #333;
+}
+
+.nqd-btn-buy {
+    background: #b48a45;
+}
+
+.nqd-btn-buy:hover {
+    background: #9a7335;
+}
+
+/* Mô tả dài */
+.nqd-long-desc {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* Cột phải: khung dịch vụ */
+.nqd-service-box {
+    border: 1px solid #e4d8c5;
+    border-radius: 12px;
+    padding: 18px 18px 8px;
+    background: #fffaf0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nqd-service-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 8px 4px;
+}
+
+.nqd-service-item img {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.nqd-service-text h4 {
+    margin: 0 0 3px;
+    font-size: 14px;
+    color: #333;
+}
+
+.nqd-service-text p {
+    margin: 0;
+    font-size: 13px;
+    color: #777;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .nqd-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .nqd-detail-left {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .nqd-img-box img {
+        width: 260px;
+        height: 260px;
+    }
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-M9W8QK8y1wG7+..."
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+<body>
+
+<header th:fragment="header">
+    <div class="nqd-header">
+        <!-- Logo -->
+        <div class="nqd-header-left">
+            <a th:href="@{/}">
+                <img th:src="@{/images/logo.png}" alt="MONA CAKE" class="nqd-logo">
+            </a>
+            <span class="nqd-logo-text">YUD MOON CAKE</span>
+        </div>
+
+        <!-- Menu -->
+        <nav class="nqd-header-nav">
+            <a th:href="@{/}" class="nqd-nav-link">Trang chủ</a>
+            <a th:href="@{/products}" class="nqd-nav-link">Sản phẩm</a>
+            <a th:href="@{/order}" class="nqd-nav-link">Đơn hàng</a>
+            <a th:href="@{/contact}" class="nqd-nav-link">Liên hệ</a>
+        </nav>
+
+
+        <!-- Search + Heart + User + Cart -->
+        <div class="nqd-header-right">
+            <!-- Thanh tìm kiếm -->
+            <form th:action="@{/products}" method="get" class="nqd-search-form">
+                <input type="text" name="keyword"
+                       placeholder="Tìm kiếm sản phẩm"
+                       class="nqd-search-input">
+                <button type="submit" class="nqd-search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+
+
+            <!-- Đánh Giá -->
+            <a th:href="@{/favorites}" class="nqd-icon-btn" title="Đánh Giá">
+                <i class="fa-regular fa-heart"></i>
+            </a>
+
+            <!-- Giỏ hàng: icon basket -->
+            <a th:href="@{/cart}" class="nqd-icon-btn" title="Giỏ hàng">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span class="nqd-icon-badge"
+                      th:text="${cartItemCount} ?: 0"></span>
+            </a>
+
+            <!-- Tài khoản -->
+            <!-- Chưa đăng nhập -->
+            <div class="nqd-header-account" th:if="${session.NQD_LOGGED_USER == null}">
+                <a th:href="@{/account/login}" class="nqd-icon-btn" title="Đăng nhập">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </div>
+
+            <!-- Đã đăng nhập -->
+            <div class="nqd-header-account" th:if="${session.NQD_LOGGED_USER != null}">
+                <!-- “Chip” hiển thị tên + avatar -->
+                <div class="nqd-account-chip">
+                    <i class="fa-regular fa-user"></i>
+                    <span class="nqd-account-name"
+                          th:text="${session.NQD_LOGGED_USER.fullName != null
+                       && !session.NQD_LOGGED_USER.fullName.isEmpty() ?
+                       session.NQD_LOGGED_USER.fullName :
+                       session.NQD_LOGGED_USER.username}">
+            User Name
+        </span>
+                </div>
+
+                <!-- Menu thả xuống khi hover -->
+                <div class="nqd-account-menu">
+                    <!-- Link xem đơn hàng: ai login cũng thấy -->
+                    <a th:href="@{/order}"
+                       class="nqd-account-menu-item">
+                        Đơn hàng của tôi
+                    </a>
+
+                    <!-- CHỈ ADMIN mới thấy nút này -->
+                    <a th:if="${session.NQD_LOGGED_USER.role != null
+                   and #strings.equalsIgnoreCase(session.NQD_LOGGED_USER.role.name, 'ROLE_ADMIN')}"
+                       th:href="@{/admin/dashboard}"
+                       class="nqd-account-menu-item">
+                        Trang quản trị
+                    </a>
+
+                    <!-- Đăng xuất -->
+                    <a th:href="@{/account/logout}"
+                       class="nqd-account-menu-item nqd-account-menu-item--logout">
+                        Đăng xuất
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+
+        </div>
+    </div>
+</header>
+
+<script th:src="@{/js/header.js}"></script>
+
+</body>
+</html>

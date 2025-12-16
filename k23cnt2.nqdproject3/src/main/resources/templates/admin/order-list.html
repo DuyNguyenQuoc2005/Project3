@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ?: 'Quản lý đơn hàng'">Quản lý đơn hàng</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-order-list.css}">
+</head>
+<body>
+
+<div class="adm-wrapper">
+
+    <!-- NÚT MỞ / THU GỌN SIDEBAR -->
+    <div class="adm-menu-toggle"
+         onclick="document.querySelector('.adm-sidebar').classList.toggle('active');
+                  document.querySelector('.adm-wrapper').classList.toggle('sidebar-active');">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- ========== SIDEBAR CHUNG (GIỐNG DASHBOARD) ========== -->
+    <aside class="adm-sidebar">
+        <div class="adm-sidebar-inner">
+            <!-- Logo -->
+            <a th:href="@{/admin/dashboard}" class="adm-logo-row">
+                <div class="adm-logo-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="adm-logo-text">
+                    <span class="adm-logo-title">YUD ADMIN</span>
+                    <span class="adm-logo-sub">Dashboard</span>
+                </div>
+            </a>
+
+            <!-- Menu -->
+            <nav class="adm-menu">
+                <a th:href="@{/admin/dashboard}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div class="adm-menu-text">Tổng quan</div>
+                </a>
+
+                <!-- TRANG HIỆN TẠI: QUẢN LÝ SẢN PHẨM -->
+                <a th:href="@{/admin/products}" class="adm-menu-item ">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý sản phẩm</div>
+                </a>
+
+                <a th:href="@{/admin/customers}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý khách hàng</div>
+                </a>
+
+                <a th:href="@{/admin/accounts}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý Admin</div>
+                </a>
+
+                <a th:href="@{/admin/orders}" class="adm-menu-item adm-menu-item--active">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý đơn hàng</div>
+                </a>
+
+                <a th:href="@{/admin/feedbacks}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-regular fa-comment-dots"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý góp ý</div>
+                </a>
+            </nav>
+
+            <!-- Bottom -->
+            <div class="adm-sidebar-bottom">
+                <a th:href="@{/}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div class="adm-menu-text">Về trang bán hàng</div>
+                </a>
+
+                <a th:href="@{/account/logout}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <div class="adm-menu-text">Đăng xuất</div>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="adm-main">
+
+        <!-- Thông báo -->
+        <div th:if="${successMessage}" class="ord-alert ord-alert--success"
+             th:text="${successMessage}"></div>
+
+        <div th:if="${errorMessage}" class="ord-alert ord-alert--error"
+             th:text="${errorMessage}"></div>
+
+        <header class="adm-main-header adm-main-header--with-actions">
+            <div>
+                <h1>Quản lý đơn hàng</h1>
+                <span class="adm-main-subtitle">Danh sách đơn đặt bánh trung thu</span>
+            </div>
+
+            <div class="adm-main-actions">
+                <a th:href="@{/admin/orders/new}"
+                   class="ord-add-btn">
+                    <i class="fa-solid fa-file-circle-plus"></i>
+                    Thêm đơn hàng
+                </a>
+            </div>
+        </header>
+
+        <section class="adm-content">
+            <div class="ord-table-wrapper">
+                <table class="ord-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Khách hàng</th>
+                        <th>Người nhận</th>
+                        <th>Điện thoại</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th style="width: 150px;">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(orders)}">
+                        <td colspan="8" class="ord-table-empty">
+                            Chưa có đơn hàng nào.
+                        </td>
+                    </tr>
+
+                    <tr th:each="o : ${orders}">
+                        <td th:text="${o.id}">1</td>
+
+                        <td>
+                            <div class="ord-customer-name"
+                                 th:text="${o.customer != null ? o.customer.username : 'Khách lẻ'}">
+                                user01
+                            </div>
+                        </td>
+
+                        <td th:text="${o.fullName} ?: '---'">Nguyễn Văn A</td>
+                        <td th:text="${o.phone} ?: '---'">0123456789</td>
+
+                        <td th:text="${o.orderDate != null ? #temporals.format(o.orderDate, 'dd/MM/yyyy HH:mm') : '---'}">
+                            12/09/2025 19:30
+                        </td>
+
+                        <td th:text="${o.totalAmount != null ? #numbers.formatDecimal(o.totalAmount, 0, 'POINT', 0, 'POINT') + ' đ' : '0 đ'}">
+                            250.000 đ
+                        </td>
+
+                        <td>
+                            <span class="ord-status ord-status--pending" th:if="${o.status == 'PENDING'}">Chờ xử lý</span>
+                            <span class="ord-status ord-status--processing" th:if="${o.status == 'PROCESSING'}">Đang xử lý</span>
+                            <span class="ord-status ord-status--shipping" th:if="${o.status == 'SHIPPING'}">Đang giao</span>
+                            <span class="ord-status ord-status--completed" th:if="${o.status == 'COMPLETED'}">Hoàn thành</span>
+                            <span class="ord-status ord-status--canceled" th:if="${o.status == 'CANCELED'}">Đã huỷ</span>
+                        </td>
+
+                        <td>
+                            <a th:href="@{/admin/orders/edit/{id}(id=${o.id})}"
+                               class="ord-btn ord-btn--sm">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                Sửa
+                            </a>
+
+                            <a th:href="@{/admin/orders/delete/{id}(id=${o.id})}"
+                               class="ord-btn ord-btn--sm ord-btn--danger"
+                               onclick="return confirm('Xoá đơn hàng này?');">
+                                <i class="fa-regular fa-trash-can"></i>
+                                Xoá
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

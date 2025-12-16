@@ -1,0 +1,123 @@
+/* ===== FOOTER WRAPPER ===== */
+.nqd-footer {
+    background-image: url('../images/footerbg.jpg'); /* đường dẫn đúng theo thư mục css */
+    background-size: cover;        /* ảnh phủ kín nền */
+    background-position: center;   /* canh giữa */
+    background-repeat: no-repeat;  /* không lặp lại */
+    color: #fff;
+    padding: 40px 80px 16px;
+    font-family: inherit;
+}
+
+/* 2 cột */
+.nqd-footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Cột trái: text + icon */
+.nqd-footer-left {
+    flex: 1;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nqd-footer-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.nqd-footer-line  {
+    margin: 8px 0;
+    font-size: 18px;
+}
+
+.nqd-footer-icon {
+    display: inline-block;
+    width: 28px;
+    text-align: center;
+}
+
+/* SOCIAL + PAYMENTS */
+.nqd-footer-social-block,
+.nqd-footer-payments-block {
+    margin-top: 28px;
+}
+
+.nqd-footer-subtitle {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+}
+
+/* Icon mạng xã hội – CĂN TRÁI */
+.nqd-footer-social {
+    display: flex;
+    justify-content: flex-start;   /* căn trái */
+    gap: 16px;
+    /* bỏ width:100% để nó ôm sát icon, thẳng hàng với chữ */
+}
+
+.nqd-footer-social a {
+    display: inline-flex;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.nqd-footer-social a:hover {
+    background: #fff;
+    color: #8b0000;
+    transform: translateY(-2px);
+}
+
+/* Icon thanh toán – CĂN TRÁI */
+.nqd-footer-payments {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;   /* căn trái */
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    /* cũng bỏ width:100% */
+}
+
+.nqd-footer-payments img {
+    height: 30px;
+    object-fit: contain;
+    background: #fff;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+
+/* Cột phải: map */
+.nqd-footer-map {
+    flex: 1;
+}
+
+.nqd-footer-map iframe {
+    width: 100%;
+    height: 320px;
+}
+
+/* Copyright */
+.nqd-footer-bottom {
+    margin-top: 26px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    text-align: center;
+    font-size: 14px;
+}

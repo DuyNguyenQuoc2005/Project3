@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đặt hàng thành công</title>
+
+    <!-- CSS dùng chung -->
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <!-- CSS riêng cho trang thành công -->
+    <link rel="stylesheet" th:href="@{/css/checkout-success.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+
+<div th:replace="~{layout/header :: header}"></div>
+
+<main class="nqd-success-page">
+    <section class="nqd-container">
+        <div class="nqd-success-card">
+            <div class="nqd-success-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <h1 class="nqd-success-title">Đặt hàng thành công!</h1>
+            <p class="nqd-success-text">
+                Cảm ơn bạn đã tin tưởng <strong>YUD MOON CAKE</strong> 💛<br>
+                Đơn hàng của bạn đã được ghi nhận. Shop sẽ liên hệ xác nhận
+                và giao bánh trong thời gian sớm nhất.
+            </p>
+
+            <div class="nqd-success-note">
+                Nếu cần hỗ trợ thêm, bạn có thể liên hệ hotline hoặc fanpage của shop nhé.
+            </div>
+
+            <div class="nqd-success-actions">
+                <a th:href="@{/products}" class="nqd-btn nqd-btn-primary">
+                    Tiếp tục mua sắm
+                </a>
+                <a th:href="@{/}" class="nqd-btn nqd-btn-secondary">
+                    Về trang chủ
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{layout/footer :: nqdFooterFragment}"></div>
+
+<script th:src="@{/js/header.js}"></script>
+</body>
+</html>

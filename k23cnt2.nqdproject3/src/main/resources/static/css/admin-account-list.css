@@ -1,0 +1,143 @@
+.adma-table-wrapper {
+    margin-top: 20px;
+    background-color: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+    padding: 12px 16px 16px;
+}
+
+.adma-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.adma-table thead tr {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    color: #ffffff;
+}
+
+.adma-table th,
+.adma-table td {
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.adma-table tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.adma-table tbody tr:hover {
+    background-color: #fff7ed;
+}
+
+.adma-table-empty {
+    text-align: center;
+    padding: 24px 0;
+    color: #6b7280;
+    font-style: italic;
+}
+
+.adma-username {
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Status */
+.adma-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.adma-status--active {
+    background-color: #ecfdf3;
+    color: #15803d;
+}
+
+.adma-status--inactive {
+    background-color: #fef2f2;
+    color: #b91c1c;
+}
+
+/* Buttons */
+.adma-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    background-color: #e5e7eb;
+    color: #111827;
+    transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.1s ease;
+}
+
+.adma-btn--sm {
+    font-size: 12px;
+    padding: 5px 9px;
+}
+
+.adma-btn--danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #ffffff;
+}
+
+.adma-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.18);
+}
+
+/* Alert */
+.adma-alert {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+.adma-alert--success {
+    background-color: #ecfdf3;
+    color: #166534;
+}
+
+.adma-alert--error {
+    background-color: #fef2f2;
+    color: #b91c1c;
+}
+
+/* Nút thêm admin */
+.adma-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(79, 70, 229, 0.55);
+    transition: transform 0.1s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.adma-add-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(79, 70, 229, 0.7);
+    filter: brightness(1.03);
+}
+
+.adma-add-btn i {
+    font-size: 14px;
+}

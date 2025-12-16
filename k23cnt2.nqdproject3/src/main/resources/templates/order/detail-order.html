@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết đơn hàng</title>
+
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/order-detail.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+</head>
+<body>
+
+<div th:replace="~{layout/header :: header}"></div>
+
+<main class="nqd-order-detail-page">
+    <section class="nqd-container nqd-order-detail-wrapper">
+
+        <!-- Thông tin chung -->
+        <div class="nqd-order-info">
+            <h1 class="nqd-order-detail-title">
+                Đơn hàng #<span th:text="${order.id}">1</span>
+            </h1>
+
+            <p><strong>Khách hàng:</strong>
+                <span th:text="${order.fullName}">Nguyễn Văn A</span></p>
+            <p><strong>Số điện thoại:</strong>
+                <span th:text="${order.phone}">0123456789</span></p>
+            <p><strong>Địa chỉ giao hàng:</strong>
+                <span th:text="${order.shipAddress}">Hà Nội</span></p>
+            <p><strong>Ngày đặt:</strong>
+                <span th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}">
+                    10/12/2025 10:00
+                </span></p>
+            <p><strong>Trạng thái:</strong>
+                <span th:text="${order.status}">PENDING</span></p>
+            <p><strong>Ghi chú:</strong>
+                <span th:text="${order.note} ?: 'Không có'">Không có</span></p>
+        </div>
+
+        <!-- Bảng sản phẩm -->
+        <div class="nqd-order-detail-table-wrapper">
+            <h2>Sản phẩm trong đơn</h2>
+            <table class="nqd-order-detail-table">
+                <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="d : ${details}">
+                    <td th:text="${d.product.name}">Bánh trung thu ABC</td>
+                    <td th:text="${d.quantity}">1</td>
+                    <td th:text="${#numbers.formatDecimal(d.unitPrice,0,'POINT',0,'POINT')} + ' đ'">
+                        95.000 đ
+                    </td>
+                    <td th:text="${#numbers.formatDecimal(d.subTotal,0,'POINT',0,'POINT')} + ' đ'">
+                        95.000 đ
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="nqd-order-detail-total">
+                <span>Tổng cộng:</span>
+                <span th:text="${#numbers.formatDecimal(order.totalAmount,0,'POINT',0,'POINT')} + ' đ'">
+                    95.000 đ
+                </span>
+            </div>
+
+            <div class="nqd-order-detail-actions">
+                <a th:href="@{/order}" class="nqd-btn nqd-btn-secondary">
+                    Quay lại danh sách
+                </a>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<div th:replace="~{layout/footer :: nqdFooterFragment}"></div>
+
+<script th:src="@{/js/header.js}"></script>
+<script th:src="@{/js/cart.js}"></script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+/* Reset nhẹ cho toàn trang */
+body {
+    margin: 0;
+    padding-top: 80px; /* CHO KHOẢNG TRỐNG BẰNG CHIỀU CAO HEADER */
+    font-family: Arial, sans-serif;
+}
+
+/* ===== HEADER WRAPPER ===== */
+.nqd-header {
+    background-color: #f23922;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 80px;
+    font-family: inherit;
+
+    /* luôn bám trên cùng màn hình */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 999;
+
+    /* hiệu ứng mượt khi thay đổi màu / bóng */
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Khi cuộn xuống 1 đoạn (JS sẽ add class này) */
+.nqd-header--scrolled {
+    background-color: #e12f18; /* đậm hơn chút */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+/* Logo + tên brand */
+.nqd-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nqd-logo {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.nqd-logo-text {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* ===== MENU ===== */
+.nqd-header-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nqd-nav-link {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.nqd-nav-link:hover {
+    text-decoration: underline;
+}
+
+/* ===== PHẦN BÊN PHẢI: search + icon ===== */
+.nqd-header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ===== SEARCH – thanh bo tròn như hình ===== */
+.nqd-search-form {
+    display: flex;
+    align-items: center;
+    background-color: #f4f4f4;    /* nền xám nhạt */
+    border-radius: 999px;         /* dạng viên thuốc */
+    padding: 4px 12px;
+    min-width: 260px;
+}
+
+.nqd-search-input {
+    border: none;
+    background: transparent;
+    padding: 6px 8px;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* placeholder in nghiêng, xám nhạt */
+.nqd-search-input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* nút icon kính lúp */
+.nqd-search-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nqd-search-btn i {
+    font-size: 18px;
+    color: #b5832b;               /* nâu vàng */
+}
+
+.nqd-search-btn:hover i {
+    transform: scale(1.05);
+}
+
+/* ===== ICON: tim, giỏ, user ===== */
+.nqd-icon-btn {
+    position: relative;
+    margin-left: 5px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;              /* size base cho icon */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* có thể hơi to hơn cho tim nếu muốn nổi bật */
+.nqd-icon-btn .fa-heart {
+    font-size: 26px;
+}
+
+/* icon user */
+.nqd-icon-btn .fa-user {
+    font-size: 24px;
+}
+
+/* badge số lượng giỏ hàng */
+.nqd-icon-badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background-color: #000;
+    color: #fff;
+    font-size: 10px;
+    border-radius: 999px;
+    padding: 2px 5px;
+}
+
+/* hiệu ứng nhún nhảy cho badge giỏ hàng */
+@keyframes nqd-badge-bounce {
+    0%   { transform: translateY(0); }
+    30%  { transform: translateY(-3px); }
+    60%  { transform: translateY(1px); }
+    100% { transform: translateY(0); }
+}
+
+.nqd-badge-bounce {
+    animation: nqd-badge-bounce 0.3s ease;
+}
+
+/* toast nhỏ góc phải dưới */
+.nqd-toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: #2ecc71;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 9999;
+}
+
+.nqd-toast--error {
+    background: #e74c3c;
+}
+
+.nqd-toast--show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== ACCOUNT (user logged in) ===== */
+.nqd-header-account {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* “Chip” avatar + tên giống Google */
+.nqd-account-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    user-select: none;
+}
+
+.nqd-account-chip i {
+    font-size: 18px;
+}
+
+.nqd-account-name {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nqd-account-chip:hover {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+/* Menu thả xuống */
+.nqd-account-menu {
+    position: absolute;
+    right: 0;
+    top: 120%;
+    background: #ffffff;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    padding: 6px 0;
+    min-width: 180px;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 1000;
+}
+
+/* Hiện menu khi hover vào block account */
+.nqd-header-account:hover .nqd-account-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Item trong menu */
+.nqd-account-menu-item {
+    display: block;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #333;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.nqd-account-menu-item:hover {
+    background: #f7f7f7;
+}
+
+.nqd-account-menu-item--logout {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.nqd-account-menu-item--logout:hover {
+    background: #ffe6e3;
+}
+

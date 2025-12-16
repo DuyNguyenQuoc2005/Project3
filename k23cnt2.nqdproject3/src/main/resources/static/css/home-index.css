@@ -1,0 +1,856 @@
+/* ================== GLOBAL ================== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff7e6;
+}
+
+/* Để nội dung không dính sát viền dưới header (nếu header fixed thì bỏ comment) */
+/* main {
+    padding-top: 80px;
+} */
+
+/* ================== HERO SECTION (banner đầu) ================== */
+/* ================== HERO SECTION (banner đầu) ================== */
+.nqd-hero {
+    position: relative;
+    min-height: 600px;
+
+    /* tách background ra cho dễ control */
+    background-image: url("/images/banhtrungthubg1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* ban đầu = 100% (như cover nhưng có thể animate được) */
+    background-size: 100%;
+
+    /* khi hover sẽ animate background-size */
+    transition: background-size 4s ease-out;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+
+    /* tránh lộ mép khi zoom */
+    overflow: hidden;
+}
+
+/* zoom nhẹ khi rê chuột vào */
+.nqd-hero:hover {
+    background-size: 110%;
+}
+
+
+.nqd-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);   /* lớp phủ làm tối ảnh */
+    z-index: 0;
+}
+
+.nqd-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    padding: 40px 20px;
+}
+
+.nqd-hero-title {
+    font-size: 42px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.nqd-hero-subtitle {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 18px;
+}
+
+.nqd-hero-divider {
+    width: 120px;
+    height: 2px;
+    background: #f7d36b;
+    margin: 0 auto 20px;
+}
+
+.nqd-hero-quote {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #ffe27a;
+    font-style: italic;
+    margin-bottom: 28px;
+}
+
+/* Nút trong hero */
+.nqd-hero-btn,
+.nqd-btn-primary {              /* alias .nqd-btn-primary cho dễ tái dùng */
+    display: inline-block;
+    padding: 10px 26px;
+    border-radius: 30px;
+    border: 1px solid #fff;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    background: transparent;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.nqd-hero-btn:hover,
+.nqd-btn-primary:hover {
+    background: #f7d36b;
+    color: #7b1111;
+    transform: translateY(-2px);
+}
+
+/* Responsive nhẹ cho hero */
+@media (max-width: 768px) {
+    .nqd-hero {
+        min-height: 420px;
+    }
+
+    .nqd-hero-title {
+        font-size: 30px;
+    }
+
+    .nqd-hero-subtitle {
+        font-size: 18px;
+    }
+
+    .nqd-hero-quote {
+        font-size: 16px;
+    }
+}
+
+/* ================== BỘ SƯU TẬP (8 SP – SLIDER) ================== */
+
+.nqd-collection-section {
+    position: relative;
+    padding: 70px 0 90px; /* trên – dưới */
+    background: #fdf0dc url("/images/trungthubg.png") center top no-repeat;
+    background-size: cover; /* cho hình bg phủ đẹp */
+    font-family: inherit;
+}
+
+/* tắt overlay nếu trước đó có dùng */
+.nqd-collection-overlay {
+    display: none;
+}
+
+.nqd-collection-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- PHẦN CHỮ TIÊU ĐỀ ---------- */
+.nqd-collection-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.nqd-collection-subtitle1 {
+    font-size: 18px;
+    margin: 0 0 6px;
+    color: #b94a1f; /* cam nâu giống mẫu */
+    font-weight: 600;
+}
+
+.nqd-collection-subtitle2 {
+    font-size: 18px;
+    margin: 0 0 20px;
+    color: #e53935; /* đỏ nổi bật */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nqd-collection-title {
+    display: inline-block;
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: #222;
+    text-transform: uppercase;
+    position: relative;
+}
+
+/* gạch đỏ dưới chữ BỘ SƯU TẬP */
+.nqd-collection-title::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 3px;
+    background: #e53935;
+    margin: 14px auto 0;
+    border-radius: 999px;
+}
+
+/* ---------- KHUNG SLIDER & CARD (giữ như cũ, chỉ căn chỉnh lại tí) ---------- */
+
+.nqd-collection-slider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 32px;
+}
+
+/* Khung hiển thị chỉ cho phép thấy 4 card – phần dư bị che */
+.nqd-collection-window {
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Dải card bên trong – trượt bằng transform */
+.nqd-collection-track {
+    display: flex;
+    gap: 24px;              /* PHẢI = 24 để khớp với JS (const gap = 24) */
+    transition: transform 0.35s ease;
+}
+
+/* Mỗi card chiếm 1/4 chiều rộng (trừ 3 gap) => luôn 4 cái / 1 slide */
+.nqd-collection-card {
+    flex: 0 0 calc((100% - 24px * 3) / 4);
+    max-width: calc((100% - 24px * 3) / 4);
+
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ảnh (hiện chưa dùng, cứ để nền xám) */
+.nqd-card-img {
+    height: 180px;
+    background: #f5f5f5;
+}
+
+
+/*Nếu sau này có ảnh:*/
+.nqd-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.nqd-card-body {
+    padding: 16px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;               /* đảm bảo các card cao bằng nhau */
+    text-align: left;
+}
+
+.nqd-card-subtitle {
+    font-size: 13px;
+    color: #888;
+    margin: 0 0 6px;
+    min-height: 32px;      /* giữ chiều cao subtitle đều nhau */
+}
+
+.nqd-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: #222;
+}
+
+.nqd-card-weight {
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 4px;
+}
+
+.nqd-card-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #e53935;
+    margin: 0 0 12px;
+}
+
+/* Đẩy nút xuống cuối để các card nhìn thẳng hàng */
+.nqd-card-btn {
+    align-self: flex-start;
+    margin-top: auto;
+
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: #ff7043;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.nqd-card-btn:hover {
+    background: #ff5722;
+    transform: translateY(-1px);
+}
+
+/* Mũi tên trái/phải – giữ như cũ cho đẹp */
+.nqd-collection-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    color: #d84315;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.nqd-collection-arrow:hover:not(:disabled) {
+    background: #ffe0b2;
+    transform: translateY(-1px);
+}
+
+.nqd-collection-arrow:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+
+
+
+/* =============== MINI BANNER TRÁI TIM =============== */
+.nqd-mini-banner {
+    position: relative;
+    background: url("/images/tettrungthubg.webp") center/cover no-repeat;
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 40px;
+    color: #fff;
+}
+
+.nqd-mini-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 0;
+}
+
+.nqd-mini-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+/* Trái tim */
+.nqd-mini-heart img {
+    width: 180px;
+    max-width: 40vw;
+    display: block;
+    animation: nqd-heart-bounce 1.8s infinite ease-in-out;
+}
+
+/* Hai cột text */
+.nqd-mini-columns {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.nqd-mini-col {
+    min-width: 260px;
+}
+
+.nqd-mini-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ff4b3a;
+    margin-bottom: 10px;
+}
+
+.nqd-mini-title-right {
+    /* nếu muốn nhấn mạnh cột phải thêm, có thể đổi màu ở đây */
+    color: #ff4b3a;
+}
+
+.nqd-mini-line {
+    margin: 4px 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Animation trái tim */
+@keyframes nqd-heart-bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-6px) scale(1.05); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nqd-mini-banner {
+        padding: 40px 20px;
+    }
+
+    .nqd-mini-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .nqd-mini-columns {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .nqd-mini-col {
+        min-width: auto;
+    }
+}
+
+/* ================== BÁNH NƯỚNG / BÁNH DẺO TRUYỀN THỐNG ================== */
+
+.nqd-classic-section {
+    position: relative;
+    padding: 70px 0 80px;
+    color: #fff;
+    background: url("/images/tettrungthubg2.webp") center/cover no-repeat fixed;
+    overflow: hidden;
+}
+
+.nqd-classic-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55); /* làm tối giống demo */
+    z-index: 0;
+}
+
+.nqd-classic-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 24px;
+}
+
+/* Khối trên / dưới */
+.nqd-classic-block + .nqd-classic-block {
+    margin-top: 40px;
+}
+
+/* Tiêu đề */
+.nqd-classic-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+/* Dòng sub tiêu đề màu vàng */
+.nqd-classic-subtitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffd966;
+    margin-bottom: 10px;
+}
+
+/* Đoạn mô tả nhỏ */
+.nqd-classic-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: 800px;
+    margin: 0 auto 25px;
+    color: #f5f5f5;
+}
+
+/* Đường kẻ ngăn 2 phần */
+.nqd-classic-divider {
+    max-width: 900px;
+    margin: 40px auto 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Hàng ảnh */
+.nqd-classic-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+/* Khung từng ảnh */
+.nqd-classic-card {
+    flex: 0 0 31%;                  /* ~3 card 1 hàng */
+    border: 2px solid rgba(255, 255, 255, 0.75);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+}
+
+/* Ảnh bên trong */
+.nqd-classic-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    display: block;
+}
+
+.img-shift-down {
+    object-fit: cover;
+    object-position: center 20%;
+}
+
+.img-shift-down2 {
+    object-fit: cover;
+    object-position: center 80%;
+}
+
+/* Responsive: tablet trở xuống stack 2/1 cột */
+@media (max-width: 992px) {
+    .nqd-classic-card {
+        flex: 0 0 45%;
+    }
+}
+
+@media (max-width: 600px) {
+    .nqd-classic-card {
+        flex: 0 0 100%;
+    }
+
+    .nqd-classic-title {
+        font-size: 26px;
+    }
+}
+
+/* ===== CÂU CHUYỆN TÂM HUYẾT ===== */
+.nqd-story-section {
+    padding: 60px 80px 80px;
+    background-color: #f5f5f5;
+}
+
+.nqd-story-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.nqd-story-heading h2 {
+    font-size: 20px;
+    color: #e53935;
+    margin-bottom: 8px;
+    text-transform: none;
+}
+
+.nqd-story-heading p {
+    margin: 2px 0;
+    color: #555;
+    font-size: 14px;
+}
+
+.nqd-story-subtitle {
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-top: 8px;
+}
+
+.nqd-story-divider {
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.nqd-story-divider span {
+    width: 16px;
+    height: 3px;
+    border-radius: 999px;
+    background-color: #e53935;
+}
+
+/* Hàng nội dung */
+.nqd-story-row {
+    display: grid;
+    grid-template-columns: 1.1fr 1.1fr;
+    gap: 40px;
+    align-items: center;
+    background-color: #ffffff;
+    margin-bottom: 24px;
+    padding: 30px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
+
+/* đảo chiều (ảnh phải, chữ trái) */
+.nqd-story-row-reverse {
+    grid-template-columns: 1.1fr 1.1fr;
+}
+
+.nqd-story-row-reverse .nqd-story-image {
+    order: 2;
+}
+.nqd-story-row-reverse .nqd-story-text {
+    order: 1;
+}
+
+.nqd-story-image img {
+    width: 100%;
+    display: block;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+/* text */
+.nqd-story-text h3 {
+    font-size: 25px;
+    color: #e53935;
+    margin-bottom: 10px;
+}
+
+.nqd-story-text p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #444;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .nqd-story-section {
+        padding: 40px 20px 60px;
+    }
+    .nqd-story-row,
+    .nqd-story-row-reverse {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+    .nqd-story-row-reverse .nqd-story-image,
+    .nqd-story-row-reverse .nqd-story-text {
+        order: initial;
+    }
+}
+
+/* ===== CAM KẾT & CẢM NHẬN KHÁCH HÀNG ===== */
+.nqd-commit-section {
+    position: relative;
+    padding: 60px 80px 80px;
+    /* background ảnh */
+    background: url("/images/trungthubg.png") center/cover no-repeat;
+    color: #333;
+}
+
+/* lớp phủ để chữ dễ đọc hơn, nếu thấy quá sáng/tối bạn chỉnh opacity lại */
+.nqd-commit-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 245, 230, 0.82); /* mờ mờ thôi */
+    z-index: 0;
+}
+
+.nqd-commit-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1.1fr;
+    gap: 60px;
+    position: relative;
+    z-index: 1; /* nằm trên overlay */
+}
+
+/* tiêu đề + divider dùng chung */
+.nqd-commit-title {
+    font-size: 24px;
+    color: #e53935;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.nqd-commit-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.nqd-commit-divider span {
+    width: 60px;
+    height: 2px;
+    background-color: #e53935;
+    border-radius: 999px;
+}
+
+.nqd-commit-divider i {
+    color: #e53935;
+}
+
+/* cột trái - cam kết */
+.nqd-commit-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nqd-commit-list li {
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.nqd-commit-list li::before {
+    content: "\f058"; /* fa-circle-check */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: #e53935;
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+/* cột phải - testimonial slider */
+.nqd-testimonial-slider {
+    position: relative;
+    /* bỏ nền trắng & bóng */
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 24px 40px; /* giữ khoảng cách text với mũi tên */
+}
+
+.nqd-testimonial-window {
+    overflow: hidden;
+    min-height: 160px;
+}
+
+/* slide */
+.nqd-testimonial-slide {
+    display: none;
+}
+
+.nqd-testimonial-slide.active {
+    display: block;
+}
+
+.nqd-testimonial-name {
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.nqd-testimonial-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+}
+
+/* arrows */
+.nqd-testimonial-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #e53935;
+    transition: background 0.2s ease, color 0.2s ease,
+                opacity 0.2s ease;
+
+    /* Ẩn mặc định */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.nqd-testimonial-arrow-prev {
+    left: -16px;
+}
+
+.nqd-testimonial-arrow-next {
+    right: -16px;
+}
+
+/* Hover vào vùng slider thì hiện mũi tên */
+.nqd-testimonial-slider:hover .nqd-testimonial-arrow {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.nqd-testimonial-arrow:hover {
+    background-color: #e53935;
+    color: #fff;
+}
+
+
+/* dots */
+.nqd-testimonial-dots {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.nqd-testimonial-dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(0,0,0,0.15);
+    cursor: pointer;
+    padding: 0;
+}
+
+.nqd-testimonial-dots button.active {
+    background-color: #e53935;
+}
+
+/* responsive */
+@media (max-width: 992px) {
+    .nqd-commit-section {
+        padding: 40px 20px 60px;
+    }
+
+    .nqd-commit-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .nqd-testimonial-arrow-prev {
+        left: 4px;
+    }
+
+    .nqd-testimonial-arrow-next {
+        right: 4px;
+    }
+}

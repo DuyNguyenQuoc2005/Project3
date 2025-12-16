@@ -1,0 +1,277 @@
+.cust-content-form {
+    max-width: 760px;
+    margin: 24px auto 40px;
+}
+
+.cust-form {
+    background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.95), #ffffff);
+    padding: 22px 24px;
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Group & label */
+.cust-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.cust-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #0f172a;
+}
+
+/* Hàng 2 cột */
+.cust-form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.cust-form-row .cust-form-group {
+    flex: 1;
+}
+
+/* Input & textarea */
+.cust-input,
+.cust-textarea {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 9px 11px;
+    font-size: 14px;
+    color: #0f172a;
+    background-color: #f9fafb;
+    outline: none;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, transform 0.1s ease;
+}
+
+.cust-input::placeholder,
+.cust-textarea::placeholder {
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.cust-input:focus,
+.cust-textarea:focus {
+    background-color: #ffffff;
+    border-color: #fb923c;
+    box-shadow: 0 0 0 1px rgba(251, 146, 60, 0.4);
+    transform: translateY(-1px);
+}
+
+.cust-textarea {
+    min-height: 70px;
+    resize: vertical;
+}
+
+/* Hint text */
+.cust-hint {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+/* Switch active */
+.cust-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cust-switch-input {
+    display: none;
+}
+
+.cust-switch-slider {
+    width: 38px;
+    height: 20px;
+    border-radius: 999px;
+    background-color: #e5e7eb;
+    position: relative;
+    transition: background-color 0.18s ease;
+}
+
+.cust-switch-slider::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.25);
+    transition: transform 0.18s ease;
+}
+
+.cust-switch-input:checked + .cust-switch-slider {
+    background-color: #22c55e;
+}
+
+.cust-switch-input:checked + .cust-switch-slider::before {
+    transform: translateX(16px);
+}
+
+.cust-switch-label {
+    font-size: 13px;
+    color: #111827;
+}
+
+/* Actions */
+.cust-form-actions {
+    margin-top: 6px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Buttons */
+.cust-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.1s ease;
+}
+
+.cust-btn-lg {
+    padding: 9px 18px;
+}
+
+.cust-btn-primary {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    color: #ffffff;
+    box-shadow: 0 12px 28px rgba(249, 115, 22, 0.5);
+}
+
+.cust-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 34px rgba(234, 88, 12, 0.6);
+}
+
+.cust-btn-secondary {
+    background-color: #f3f4f6;
+    color: #111827;
+    border: 1px solid #e5e7eb;
+}
+
+.cust-btn-secondary:hover {
+    background-color: #e5e7eb;
+}
+
+/* Icon size */
+.cust-btn i {
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cust-form {
+        padding: 18px 16px;
+        border-radius: 16px;
+    }
+
+    .cust-form-row {
+        flex-direction: column;
+    }
+
+    .cust-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .cust-btn,
+    .cust-btn-lg {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ==== TOGGLE TRẠNG THÁI KHÁCH HÀNG ==== */
+
+.cust-toggle {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.cust-toggle-input {
+    display: none;
+}
+
+.cust-toggle-track {
+    position: relative;
+    width: 120px;
+    height: 28px;
+    border-radius: 999px;
+    background-color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    box-sizing: border-box;
+    transition: background-color 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+}
+
+.cust-toggle-thumb {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background-color: #ffffff;
+    left: 4px;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+    transition: transform 0.18s ease;
+}
+
+/* Text trong track */
+.cust-toggle-text {
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.16s ease;
+    pointer-events: none;
+    width: 100%;
+}
+
+.cust-toggle-text--on {
+    color: #022c22;
+}
+
+.cust-toggle-text--off {
+    color: #7f1d1d;
+    opacity: 1; /* mặc định ban đầu: OFF */
+}
+
+/* Khi CHECKED (Hoạt động) */
+.cust-toggle-input:checked ~ .cust-toggle-track {
+    background-color: #22c55e;
+    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.45);
+}
+
+.cust-toggle-input:checked ~ .cust-toggle-track .cust-toggle-thumb {
+    transform: translateX(64px);
+}
+
+.cust-toggle-input:checked ~ .cust-toggle-track .cust-toggle-text--on {
+    opacity: 1;
+}
+
+.cust-toggle-input:checked ~ .cust-toggle-track .cust-toggle-text--off {
+    opacity: 0;
+}

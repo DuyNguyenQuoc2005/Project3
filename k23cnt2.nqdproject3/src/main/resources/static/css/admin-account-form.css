@@ -1,0 +1,234 @@
+.adma-content-form {
+    max-width: 760px;
+    margin: 24px auto 40px;
+}
+
+.adma-form {
+    background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.95), #ffffff);
+    padding: 22px 24px;
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Group & label */
+.adma-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.adma-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #0f172a;
+}
+
+/* Row 2 cột */
+.adma-form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.adma-form-row .adma-form-group {
+    flex: 1;
+}
+
+/* Input & textarea */
+.adma-input,
+.adma-textarea {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 9px 11px;
+    font-size: 14px;
+    color: #0f172a;
+    background-color: #f9fafb;
+    outline: none;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, transform 0.1s ease;
+}
+
+.adma-input::placeholder,
+.adma-textarea::placeholder {
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.adma-input:focus,
+.adma-textarea:focus {
+    background-color: #ffffff;
+    border-color: #fb923c;
+    box-shadow: 0 0 0 1px rgba(251, 146, 60, 0.4);
+    transform: translateY(-1px);
+}
+
+.adma-textarea {
+    min-height: 70px;
+    resize: vertical;
+}
+
+.adma-input--readonly {
+    background-color: #f3f4f6;
+    cursor: default;
+}
+
+/* Hint */
+.adma-hint {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+/* Toggle trạng thái */
+.adma-toggle {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.adma-toggle-input {
+    display: none;
+}
+
+.adma-toggle-track {
+    position: relative;
+    width: 120px;
+    height: 28px;
+    border-radius: 999px;
+    background-color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    box-sizing: border-box;
+    transition: background-color 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+}
+
+.adma-toggle-thumb {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background-color: #ffffff;
+    left: 4px;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+    transition: transform 0.18s ease;
+}
+
+/* Text trong track */
+.adma-toggle-text {
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.16s ease;
+    pointer-events: none;
+    width: 100%;
+}
+
+.adma-toggle-text--on {
+    color: #022c22;
+}
+
+.adma-toggle-text--off {
+    color: #7f1d1d;
+    opacity: 1;
+}
+
+/* Khi checked */
+.adma-toggle-input:checked ~ .adma-toggle-track {
+    background-color: #22c55e;
+    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.45);
+}
+
+.adma-toggle-input:checked ~ .adma-toggle-track .adma-toggle-thumb {
+    transform: translateX(64px);
+}
+
+.adma-toggle-input:checked ~ .adma-toggle-track .adma-toggle-text--on {
+    opacity: 1;
+}
+
+.adma-toggle-input:checked ~ .adma-toggle-track .adma-toggle-text--off {
+    opacity: 0;
+}
+
+/* Actions */
+.adma-form-actions {
+    margin-top: 6px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Buttons */
+.adma-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.1s ease;
+}
+
+.adma-btn-lg {
+    padding: 9px 18px;
+}
+
+.adma-btn-primary {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    color: #ffffff;
+    box-shadow: 0 12px 28px rgba(249, 115, 22, 0.5);
+}
+
+.adma-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 34px rgba(234, 88, 12, 0.6);
+}
+
+.adma-btn-secondary {
+    background-color: #f3f4f6;
+    color: #111827;
+    border: 1px solid #e5e7eb;
+}
+
+.adma-btn-secondary:hover {
+    background-color: #e5e7eb;
+}
+
+.adma-btn i {
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .adma-form {
+        padding: 18px 16px;
+        border-radius: 16px;
+    }
+
+    .adma-form-row {
+        flex-direction: column;
+    }
+
+    .adma-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .adma-btn,
+    .adma-btn-lg {
+        width: 100%;
+        justify-content: center;
+    }
+}

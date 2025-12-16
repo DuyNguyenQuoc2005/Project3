@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ?: 'Quản lý sản phẩm'">Quản lý sản phẩm</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <!-- CSS layout admin chung (dashboard style mới) -->
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <!-- CSS riêng cho trang product list -->
+    <link rel="stylesheet" th:href="@{/css/admin-product-list.css}">
+</head>
+
+<body>
+
+<div class="adm-wrapper">
+
+    <!-- NÚT MỞ / THU GỌN SIDEBAR -->
+    <div class="adm-menu-toggle"
+         onclick="document.querySelector('.adm-sidebar').classList.toggle('active');
+                  document.querySelector('.adm-wrapper').classList.toggle('sidebar-active');">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- ========== SIDEBAR CHUNG (GIỐNG DASHBOARD) ========== -->
+    <aside class="adm-sidebar">
+        <div class="adm-sidebar-inner">
+            <!-- Logo -->
+            <a th:href="@{/admin/dashboard}" class="adm-logo-row">
+                <div class="adm-logo-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="adm-logo-text">
+                    <span class="adm-logo-title">YUD ADMIN</span>
+                    <span class="adm-logo-sub">Dashboard</span>
+                </div>
+            </a>
+
+            <!-- Menu -->
+            <nav class="adm-menu">
+                <a th:href="@{/admin/dashboard}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div class="adm-menu-text">Tổng quan</div>
+                </a>
+
+                <!-- TRANG HIỆN TẠI: QUẢN LÝ SẢN PHẨM -->
+                <a th:href="@{/admin/products}" class="adm-menu-item adm-menu-item--active">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý sản phẩm</div>
+                </a>
+
+                <a th:href="@{/admin/customers}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý khách hàng</div>
+                </a>
+
+                <a th:href="@{/admin/accounts}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý Admin</div>
+                </a>
+
+                <a th:href="@{/admin/orders}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý đơn hàng</div>
+                </a>
+
+                <a th:href="@{/admin/feedbacks}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-regular fa-comment-dots"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý góp ý</div>
+                </a>
+            </nav>
+
+            <!-- Bottom -->
+            <div class="adm-sidebar-bottom">
+                <a th:href="@{/}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div class="adm-menu-text">Về trang bán hàng</div>
+                </a>
+
+                <a th:href="@{/account/logout}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <div class="adm-menu-text">Đăng xuất</div>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="adm-main">
+
+        <!-- Thanh tiêu đề + nút thêm (giữ nguyên style cũ) -->
+        <header class="adm-main-header">
+            <h1>Quản lý sản phẩm</h1>
+            <span class="adm-main-subtitle">
+        Danh sách toàn bộ sản phẩm trong hệ thống
+    </span>
+
+            <div class="adm-main-actions adm-main-actions--left">
+                <a th:href="@{/admin/products/new}"
+                   class="adm-btn adm-btn-primary">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    Thêm sản phẩm
+                </a>
+            </div>
+        </header>
+
+
+        <!-- Thông báo flash -->
+        <div th:if="${successMessage}" class="adm-alert adm-alert-success"
+             th:text="${successMessage}"></div>
+
+        <div th:if="${errorMessage}" class="adm-alert adm-alert-danger"
+             th:text="${errorMessage}"></div>
+
+        <!-- Bảng sản phẩm (nguyên si code cũ của cậu) -->
+        <section class="adm-content">
+            <div class="adm-table-wrapper">
+                <table class="adm-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Danh mục</th>
+                        <th>Giá bán</th>
+                        <th>Tồn kho</th>
+                        <th>Trạng thái</th>
+                        <th style="width: 150px;">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(products)}">
+                        <td colspan="8" class="adm-table-empty">
+                            Chưa có sản phẩm nào.
+                        </td>
+                    </tr>
+
+                    <tr th:each="p : ${products}">
+                        <td th:text="${p.id}">1</td>
+
+                        <td>
+                            <div class="adm-product-thumb-wrapper">
+                                <img th:if="${p.imageUrl != null}"
+                                     th:src="${p.imageUrl}"
+                                     alt="Ảnh"
+                                     class="adm-product-thumb">
+                                <span th:if="${p.imageUrl == null}" class="adm-badge adm-badge--gray">
+                                    No Image
+                                </span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="adm-product-name" th:text="${p.name}">Bánh trung thu</div>
+                            <div class="adm-product-flags">
+                                <span class="adm-badge adm-badge--green"
+                                      th:if="${p.newProduct}">New</span>
+                                <span class="adm-badge adm-badge--orange"
+                                      th:if="${p.bestSeller}">Best seller</span>
+                                <span class="adm-badge adm-badge--red"
+                                      th:if="${!p.active}">Ngừng bán</span>
+                            </div>
+                        </td>
+
+                        <td th:text="${p.category != null ? p.category.name : '---'}">Bánh nướng</td>
+
+                        <td th:text="${#numbers.formatDecimal(p.price, 0, 'POINT', 0, 'POINT')} + ' đ'">
+                            120.000 đ
+                        </td>
+
+                        <td th:text="${p.stockQuantity}">50</td>
+
+                        <td>
+                            <span class="adm-tag adm-tag--success"
+                                  th:if="${p.active}">Đang bán</span>
+                            <span class="adm-tag adm-tag--danger"
+                                  th:if="${!p.active}">Ẩn</span>
+                        </td>
+
+                        <td>
+                            <a th:href="@{/admin/products/edit/{id}(id=${p.id})}"
+                               class="adm-btn adm-btn-sm">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                Sửa
+                            </a>
+
+                            <a th:href="@{/admin/products/delete/{id}(id=${p.id})}"
+                               class="adm-btn adm-btn-sm adm-btn-danger"
+                               onclick="return confirm('Xoá sản phẩm này?');">
+                                <i class="fa-regular fa-trash-can"></i>
+                                Xoá
+                            </a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+</body>
+</html>

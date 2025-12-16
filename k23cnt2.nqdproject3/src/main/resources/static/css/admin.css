@@ -1,0 +1,466 @@
+/* ===== GLOBAL RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+:root {
+    --adm-bg: #14161e;
+    --adm-sidebar-bg: #111827;
+    --adm-accent: #ff4b2b;
+    --adm-accent-soft: #f97316;
+    --adm-text-light: #f9fafb;
+}
+
+/* ===== LAYOUT TỔNG ===== */
+body {
+    min-height: 100vh;
+    background: var(--adm-bg);
+}
+
+.adm-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    padding-left: 90px; /* width sidebar thu nhỏ */
+    transition: padding-left 0.5s ease;
+}
+
+/* Khi sidebar mở rộng */
+.adm-wrapper.sidebar-active {
+    padding-left: 300px;
+}
+
+/* ===== SIDEBAR ===== */
+.adm-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 100vh;
+    background: #ffffff;
+    box-shadow: 6px 0 18px rgba(0, 0, 0, 0.25);
+    transition: width 0.5s ease;
+    overflow: hidden;
+    z-index: 900;
+}
+
+.adm-sidebar.active {
+    width: 300px;
+}
+
+.adm-sidebar-inner {
+    position: relative;
+    height: 100%;
+    padding: 20px 10px 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Logo row */
+.adm-logo-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 18px;
+    text-decoration: none;
+    margin-bottom: 30px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.adm-logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    background: var(--adm-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0 8px 20px rgba(255, 75, 43, 0.5);
+}
+
+.adm-logo-text {
+    display: flex;
+    flex-direction: column;
+    color: #111827;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.adm-logo-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.adm-logo-sub {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #6b7280;
+}
+
+/* Khi sidebar mở, hiện text logo */
+.adm-sidebar.active .adm-logo-text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ===== MENU ===== */
+.adm-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: auto;
+}
+
+.adm-menu-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #374151;
+    overflow: hidden;
+    transition: background 0.4s ease, color 0.4s ease, transform 0.15s ease;
+    margin: 2px 4px;
+}
+
+/* Icon + text trong item */
+.adm-menu-icon {
+    position: relative;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #111827;
+    transition: color 0.35s ease;
+}
+
+.adm-menu-text {
+    position: relative;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    color: #374151;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.35s ease;
+}
+
+/* Khi sidebar mở: hiện text menu */
+.adm-sidebar.active .adm-menu-text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Hiệu ứng active kiểu video (viên thuốc bo tròn + highlight) */
+.adm-menu-item::before,
+.adm-menu-item::after {
+    content: "";
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: transparent;
+    right: 6px;
+    transition: background 0.45s ease;
+    z-index: -1;
+}
+
+.adm-menu-item::before {
+    top: -20px;
+    box-shadow: 0 18px 0 0 transparent;
+}
+
+.adm-menu-item::after {
+    bottom: -20px;
+    box-shadow: 0 -18px 0 0 transparent;
+}
+
+/* ACTIVE */
+.adm-menu-item--active {
+    background: var(--adm-accent);
+    color: #fff;
+    transform: translateX(4px);
+}
+
+.adm-menu-item--active .adm-menu-icon,
+.adm-menu-item--active .adm-menu-text {
+    color: #fff;
+}
+
+.adm-menu-item--active::before {
+    box-shadow: 0 18px 0 0 var(--adm-accent);
+}
+
+.adm-menu-item--active::after {
+    box-shadow: 0 -18px 0 0 var(--adm-accent);
+}
+
+/* Hover */
+.adm-menu-item:hover {
+    background: rgba(249, 115, 22, 0.08);
+    transform: translateX(4px);
+}
+
+.adm-menu-item:hover .adm-menu-icon {
+    color: var(--adm-accent-soft);
+}
+
+.adm-menu-item:hover .adm-menu-text {
+    color: #111827;
+}
+
+/* Bottom section */
+.adm-sidebar-bottom {
+    margin-top: 20px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 10px;
+}
+
+.adm-menu-item--bottom {
+    font-size: 12px;
+}
+
+/* ===== TOGGLE BUTTON ===== */
+.adm-menu-toggle {
+    position: fixed;
+    top: 20px;
+    right: 26px;
+    width: 52px;
+    height: 52px;
+    background: var(--adm-accent);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 13px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 12px 30px rgba(255, 75, 43, 0.6);
+}
+
+.adm-menu-toggle span {
+    display: block;
+    height: 3px;
+    border-radius: 999px;
+    background: #ffffff;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Khi sidebar active, xoay thành icon X nhẹ nhẹ */
+.adm-sidebar.active ~ .adm-main .adm-menu-toggle,
+.adm-wrapper.sidebar-active .adm-menu-toggle {
+    /* để vẫn ở đúng chỗ – không cần đổi */
+}
+
+.adm-wrapper.sidebar-active .adm-menu-toggle span:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+}
+
+.adm-wrapper.sidebar-active .adm-menu-toggle span:nth-child(2) {
+    opacity: 0;
+}
+
+.adm-wrapper.sidebar-active .adm-menu-toggle span:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+}
+
+/* ===== MAIN AREA ===== */
+.adm-main {
+    flex: 1;
+    padding: 24px 26px 26px;
+    color: #020617;
+    background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.95), #f3f5fb);
+}
+
+/* Header */
+.adm-main-header h1 {
+    font-size: 24px;
+    color: #f97316;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.adm-main-subtitle {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* ===== STAT CARDS ===== */
+.adm-stats-row {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.adm-stat-card {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 18px;
+    color: #fff;
+    box-shadow: 0 18px 32px rgba(15, 23, 42, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.adm-stat-card::after {
+    content: "";
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    width: 70px;
+    height: 70px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    filter: blur(2px);
+}
+
+.adm-stat-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.22);
+    margin-right: 10px;
+    font-size: 22px;
+}
+
+.adm-stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.adm-stat-label {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.adm-stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 3px;
+}
+
+/* Màu từng card */
+.adm-stat-card--blue {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+}
+
+.adm-stat-card--green {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+}
+
+.adm-stat-card--orange {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+}
+
+.adm-stat-card--pink {
+    background: linear-gradient(135deg, #fb7185, #f973c5);
+}
+
+/* ====== WELCOME BOX ====== */
+.adm-welcome-box {
+    margin-top: 22px;
+    background: #fefefe;
+    border-radius: 18px;
+    border: 1px solid #bbf7d0;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+}
+
+.adm-welcome-text h2 {
+    font-size: 20px;
+    color: #15803d;
+}
+
+.adm-welcome-text p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #4b5563;
+}
+
+/* Bot cute */
+.adm-welcome-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adm-bot {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+.adm-bot-head,
+.adm-bot-body {
+    background: #22c55e;
+    border-radius: 18px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.adm-bot-head {
+    top: 0;
+    width: 54px;
+    height: 34px;
+    border-radius: 18px 18px 12px 12px;
+}
+
+.adm-bot-body {
+    bottom: 0;
+    width: 40px;
+    height: 32px;
+    border-radius: 12px 12px 16px 16px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .adm-stats-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .adm-wrapper,
+    .adm-wrapper.sidebar-active {
+        padding-left: 90px;
+    }
+
+    .adm-sidebar.active {
+        width: 240px;
+    }
+
+    .adm-main {
+        padding: 18px 16px 20px;
+    }
+
+    .adm-welcome-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

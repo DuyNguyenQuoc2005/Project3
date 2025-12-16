@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Giỏ hàng</title>
+
+    <!-- CSS dùng chung -->
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <!-- CSS riêng giỏ hàng -->
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+
+<!-- HEADER -->
+<div th:replace="~{layout/header :: header}"></div>
+
+<main class="nqd-cart-page">
+
+    <!-- BREADCRUMB -->
+    <section class="nqd-breadcrumb">
+        <div class="nqd-container nqd-breadcrumb-inner">
+            <a th:href="@{/}">Trang chủ</a>
+            <span>/</span>
+            <span>Giỏ hàng</span>
+        </div>
+    </section>
+
+    <section class="nqd-cart-main">
+        <div class="nqd-container nqd-cart-layout">
+
+            <!-- THÔNG BÁO -->
+            <div class="nqd-cart-alert"
+                 th:if="${cartMessage}"
+                 th:text="${cartMessage}"></div>
+
+            <!-- BÊN TRÁI: DANH SÁCH SẢN PHẨM -->
+            <section class="nqd-cart-left">
+
+                <h1 class="nqd-cart-title">Giỏ hàng của bạn</h1>
+
+                <p class="nqd-cart-empty"
+                   th:if="${#lists.isEmpty(cartItems)}">
+                    Giỏ hàng của bạn đang trống.
+                </p>
+
+                <div class="nqd-cart-list"
+                     th:if="${!#lists.isEmpty(cartItems)}">
+
+                    <div class="nqd-cart-item"
+                         th:each="item : ${cartItems}">
+
+                        <div class="nqd-cart-img">
+                            <img th:src="${item.imageUrl}"
+                                 th:alt="${item.name}">
+                        </div>
+
+                        <div class="nqd-cart-info">
+                            <h3 class="nqd-cart-name"
+                                th:text="${item.name}">
+                                Tên bánh
+                            </h3>
+                            <p class="nqd-cart-price">
+                                Đơn giá:
+                                <span th:text="${#numbers.formatDecimal(item.price,0,'POINT',0,'POINT')} + ' đ'">
+                                    120.000 đ
+                                </span>
+                            </p>
+                            <p class="nqd-cart-subtotal">
+                                Tạm tính:
+                                <span th:text="${#numbers.formatDecimal(item.subtotal,0,'POINT',0,'POINT')} + ' đ'">
+                                    120.000 đ
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="nqd-cart-qty">
+                            <form th:action="@{/cart/update}" method="post" class="nqd-qty-form">
+                                <input type="hidden" name="productId"
+                                       th:value="${item.productId}">
+                                <button type="submit" name="change" value="-1"
+                                        class="nqd-qty-btn">−</button>
+                                <span class="nqd-qty-value"
+                                      th:text="${item.quantity}">1</span>
+                                <button type="submit" name="change" value="1"
+                                        class="nqd-qty-btn">+</button>
+                            </form>
+
+                            <form th:action="@{/cart/remove}" method="post"
+                                  class="nqd-remove-form">
+                                <input type="hidden" name="productId"
+                                       th:value="${item.productId}">
+                                <button type="submit" class="nqd-remove-btn" title="Xóa sản phẩm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <form th:action="@{/cart/clear}" method="post" class="nqd-clear-form">
+                        <button type="submit" class="nqd-clear-btn">
+                            Xóa toàn bộ giỏ hàng
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- BÊN PHẢI: TÓM TẮT + DỊCH VỤ -->
+            <aside class="nqd-cart-right"
+                   th:if="${!#lists.isEmpty(cartItems)}">
+
+                <!-- TÓM TẮT ĐƠN HÀNG -->
+                <div class="nqd-cart-summary">
+                    <h2>Tóm tắt đơn hàng</h2>
+
+                    <div class="nqd-summary-row">
+                        <span>Tạm tính</span>
+                        <span th:text="${#numbers.formatDecimal(cartTotal,0,'POINT',0,'POINT')} + ' đ'">
+                            0 đ
+                        </span>
+                    </div>
+
+                    <div class="nqd-summary-row">
+                        <span>Phí vận chuyển</span>
+                        <span th:text="${shippingFeeDisplay}">Miễn phí</span>
+                    </div>
+
+                    <div class="nqd-summary-total">
+                        <span>Tổng cộng</span>
+                        <span th:text="${#numbers.formatDecimal(grandTotal,0,'POINT',0,'POINT')} + ' đ'">
+                            0 đ
+                        </span>
+                    </div>
+
+                    <div class="nqd-summary-actions">
+                        <a th:href="@{/products}" class="nqd-btn nqd-btn-secondary">
+                            Tiếp tục mua sắm
+                        </a>
+
+                        <!-- 🔥 NÚT ĐẶT HÀNG: sang trang checkout -->
+                        <a th:href="@{/checkout}" class="nqd-btn nqd-btn-primary">
+                            Tiến hành đặt hàng
+                        </a>
+                    </div>
+                </div>
+
+                <!-- KHUNG DỊCH VỤ -->
+                <div class="nqd-cart-services">
+                    <div class="nqd-service-item">
+                        <img th:src="@{/images/icon_service_1.webp}" alt="">
+                        <div>
+                            <p class="nqd-service-title">GIAO HÀNG FREE NỘI THÀNH</p>
+                            <p class="nqd-service-text">Giao free trong nội thành HN và HCM</p>
+                        </div>
+                    </div>
+
+                    <div class="nqd-service-item">
+                        <img th:src="@{/images/icon_service_2.webp}" alt="">
+                        <div>
+                            <p class="nqd-service-title">TRẢ HÀNG TRONG VÒNG 24H</p>
+                            <p class="nqd-service-text">Hỗ trợ trả hàng cho khách khi sản phẩm có lỗi</p>
+                        </div>
+                    </div>
+
+                    <div class="nqd-service-item">
+                        <img th:src="@{/images/icon_service_3.webp}" alt="">
+                        <div>
+                            <p class="nqd-service-title">KIỂM TRA HÀNG KHI NHẬN</p>
+                            <p class="nqd-service-text">Khách được kiểm tra hàng trước khi thanh toán</p>
+                        </div>
+                    </div>
+
+                    <div class="nqd-service-item">
+                        <img th:src="@{/images/icon_service_4.webp}" alt="">
+                        <div>
+                            <p class="nqd-service-title">THANH TOÁN COD</p>
+                            <p class="nqd-service-text">Hỗ trợ khách thanh toán khi nhận hàng</p>
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<div th:replace="~{layout/footer :: nqdFooterFragment}"></div>
+
+<script th:src="@{/js/header.js}"></script>
+<script th:src="@{/js/cart.js}"></script>
+</body>
+</html>

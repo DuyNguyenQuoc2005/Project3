@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ?: 'Quản lý Admin'">Quản lý Admin</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-account-form.css}">
+</head>
+<body>
+
+<div class="adm-wrapper">
+
+    <!-- NÚT MỞ / THU GỌN SIDEBAR -->
+    <div class="adm-menu-toggle"
+         onclick="document.querySelector('.adm-sidebar').classList.toggle('active');
+                  document.querySelector('.adm-wrapper').classList.toggle('sidebar-active');">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- ========== SIDEBAR CHUNG (GIỐNG DASHBOARD) ========== -->
+    <aside class="adm-sidebar">
+        <div class="adm-sidebar-inner">
+            <!-- Logo -->
+            <a th:href="@{/admin/dashboard}" class="adm-logo-row">
+                <div class="adm-logo-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="adm-logo-text">
+                    <span class="adm-logo-title">YUD ADMIN</span>
+                    <span class="adm-logo-sub">Dashboard</span>
+                </div>
+            </a>
+
+            <!-- Menu -->
+            <nav class="adm-menu">
+                <a th:href="@{/admin/dashboard}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div class="adm-menu-text">Tổng quan</div>
+                </a>
+
+                <!-- TRANG HIỆN TẠI: QUẢN LÝ SẢN PHẨM -->
+                <a th:href="@{/admin/products}" class="adm-menu-item ">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý sản phẩm</div>
+                </a>
+
+                <a th:href="@{/admin/customers}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý khách hàng</div>
+                </a>
+
+                <a th:href="@{/admin/accounts}" class="adm-menu-item adm-menu-item--active">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý Admin</div>
+                </a>
+
+                <a th:href="@{/admin/orders}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý đơn hàng</div>
+                </a>
+
+                <a th:href="@{/admin/feedbacks}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-regular fa-comment-dots"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý góp ý</div>
+                </a>
+            </nav>
+
+            <!-- Bottom -->
+            <div class="adm-sidebar-bottom">
+                <a th:href="@{/}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div class="adm-menu-text">Về trang bán hàng</div>
+                </a>
+
+                <a th:href="@{/account/logout}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <div class="adm-menu-text">Đăng xuất</div>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="adm-main">
+
+        <header class="adm-main-header">
+            <div>
+                <h1 th:text="${pageTitle}">Tài khoản Admin</h1>
+                <span class="adm-main-subtitle">Thông tin tài khoản quản trị</span>
+            </div>
+        </header>
+
+        <section class="adma-content-form">
+            <form th:action="@{/admin/accounts/save}"
+                  th:object="${admin}"
+                  method="post"
+                  class="adma-form">
+
+                <input type="hidden" th:field="*{id}"/>
+
+                <!-- Username -->
+                <div class="adma-form-group">
+                    <label class="adma-label">Tên đăng nhập</label>
+                    <input type="text" th:field="*{username}" class="adma-input"
+                           th:attr="readonly=${admin.id != null}"
+                           placeholder="username">
+                    <span class="adma-hint" th:if="${admin.id != null}">
+                        Không thể đổi tên đăng nhập.
+                    </span>
+                </div>
+
+                <!-- Password -->
+                <div class="adma-form-group">
+                    <label class="adma-label">Mật khẩu</label>
+                    <input type="password" th:field="*{password}" class="adma-input"
+                           placeholder="Nhập mật khẩu">
+                    <span class="adma-hint" th:if="${admin.id != null}">
+                        Để trống nếu không muốn đổi mật khẩu.
+                    </span>
+                </div>
+
+                <!-- Họ tên + SĐT -->
+                <div class="adma-form-row">
+                    <div class="adma-form-group">
+                        <label class="adma-label">Họ tên</label>
+                        <input type="text" th:field="*{fullName}" class="adma-input">
+                    </div>
+
+                    <div class="adma-form-group">
+                        <label class="adma-label">Điện thoại</label>
+                        <input type="text" th:field="*{phone}" class="adma-input">
+                    </div>
+                </div>
+
+                <!-- Email + trạng thái -->
+                <div class="adma-form-row">
+                    <div class="adma-form-group">
+                        <label class="adma-label">Email</label>
+                        <input type="email" th:field="*{email}" class="adma-input">
+                    </div>
+
+                    <div class="adma-form-group">
+                        <label class="adma-label">Trạng thái</label>
+                        <label class="adma-toggle">
+                            <input type="checkbox" th:field="*{active}" class="adma-toggle-input">
+
+                            <span class="adma-toggle-track">
+                                <span class="adma-toggle-thumb"></span>
+                                <span class="adma-toggle-text adma-toggle-text--on">Hoạt động</span>
+                                <span class="adma-toggle-text adma-toggle-text--off">Khoá</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Địa chỉ -->
+                <div class="adma-form-group">
+                    <label class="adma-label">Địa chỉ</label>
+                    <textarea th:field="*{address}" class="adma-textarea" rows="2"></textarea>
+                </div>
+
+                <!-- Role hiển thị -->
+                <div class="adma-form-group">
+                    <label class="adma-label">Vai trò</label>
+                    <input type="text" class="adma-input adma-input--readonly"
+                           value="ROLE_ADMIN" readonly>
+                    <span class="adma-hint">Tài khoản này luôn có quyền ROLE_ADMIN.</span>
+                </div>
+
+                <div class="adma-form-actions">
+                    <button type="submit" class="adma-btn adma-btn-primary adma-btn-lg">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Lưu tài khoản</span>
+                    </button>
+
+                    <a th:href="@{/admin/accounts}" class="adma-btn adma-btn-secondary">
+                        Hủy và quay lại
+                    </a>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

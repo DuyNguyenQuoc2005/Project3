@@ -1,0 +1,190 @@
+/* NỀN TRANG ĐƠN HÀNG */
+.nqd-order-page {
+    background: url("/images/trungthubg.png") top center / cover no-repeat fixed;
+    padding: 40px 0 60px;
+    font-family: inherit;
+}
+
+/* CONTAINER DÙNG CHUNG */
+.nqd-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* =============== BREADCRUMB =============== */
+.nqd-breadcrumb {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.nqd-breadcrumb-inner {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.nqd-breadcrumb a {
+    color: #c0392b;
+    text-decoration: none;
+}
+
+.nqd-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.nqd-breadcrumb span {
+    color: #555;
+}
+
+/* KHỐI CHÍNH TRONG TRANG ĐƠN HÀNG */
+.nqd-order-main {
+    padding-top: 18px;
+}
+
+/* TIÊU ĐỀ */
+.nqd-order-title {
+    font-size: 24px;
+    margin-bottom: 14px;
+    color: #b22222;
+    font-weight: 700;
+}
+
+/* THÔNG BÁO CẦN ĐĂNG NHẬP */
+.nqd-order-notice {
+    background: rgba(255, 248, 220, 0.96);
+    border: 1px solid #ffe4a3;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.nqd-order-notice a {
+    color: #d35400;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.nqd-order-notice a:hover {
+    text-decoration: underline;
+}
+
+/* KHÔNG CÓ ĐƠN HÀNG */
+.nqd-order-empty {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 16px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+/* BẢNG ĐƠN HÀNG */
+.nqd-order-table-wrapper {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+}
+
+.nqd-order-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.nqd-order-table th,
+.nqd-order-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.nqd-order-table th {
+    font-weight: 700;
+    background: #fff8f0;
+}
+
+.nqd-order-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* LINK XEM CHI TIẾT */
+.nqd-order-link {
+    color: #f23922;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.nqd-order-link:hover {
+    text-decoration: underline;
+}
+
+/* =============== BADGE TRẠNG THÁI =============== */
+.nqd-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Mặc định (nếu lỡ không map status) */
+.nqd-status-badge span {
+    white-space: nowrap;
+}
+
+/* PENDING */
+.nqd-status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* PROCESSING */
+.nqd-status-processing {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+/* SHIPPING */
+.nqd-status-shipping {
+    background: #cce5ff;
+    color: #004085;
+}
+
+/* COMPLETED */
+.nqd-status-completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* CANCELED */
+.nqd-status-canceled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* RESPONSIVE NHẸ */
+@media (max-width: 768px) {
+    .nqd-order-title {
+        font-size: 20px;
+    }
+
+    .nqd-order-table-wrapper {
+        padding: 14px 12px;
+    }
+
+    .nqd-order-table th,
+    .nqd-order-table td {
+        font-size: 13px;
+        padding: 8px 6px;
+    }
+}

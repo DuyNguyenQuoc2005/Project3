@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ - Bánh Trung Thu</title>
+
+    <!-- CSS dùng chung -->
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <!-- CSS riêng của trang home -->
+    <link rel="stylesheet" th:href="@{/css/home-index.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-mQd8gB..."
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+<body>
+
+<!-- HEADER dùng fragment -->
+<div th:replace="layout/header :: header"></div>
+
+<main>
+    <!-- HERO LỚN -->
+    <section class="nqd-hero">
+        <div class="nqd-hero-overlay"></div>
+        <div class="nqd-hero-inner">
+            <h2 class="nqd-hero-title">BÁNH TRUNG THU NQD CAKE</h2>
+            <p class="nqd-hero-subtitle">Đồng hành gắn kết triệu triệu gia đình</p>
+            <div class="nqd-hero-divider"></div>
+            <p class="nqd-hero-quote">
+                “Đến mùa trăng sáng chẳng quên – Trung thu là lúc về bên gia đình,
+                Thiện Lương đồng hành cùng bạn chia sẻ tình thân gia đình”
+            </p>
+            <a class="nqd-hero-btn" th:href="@{/products}">Xem bộ sưu tập bánh</a>
+        </div>
+    </section>
+
+    <!-- MINI BANNER TẾT ĐOÀN VIÊN + TRÁI TIM -->
+    <section class="nqd-mini-banner">
+        <div class="nqd-mini-overlay"></div>
+
+        <div class="nqd-mini-inner">
+            <!-- Trái tim -->
+            <div class="nqd-mini-heart">
+                <img th:src="@{/images/heart.png}" alt="Tết đoàn viên">
+            </div>
+
+            <!-- 2 cột lời chúc -->
+            <div class="nqd-mini-columns">
+                <!-- Cột trái -->
+                <div class="nqd-mini-col">
+                    <h3 class="nqd-mini-title">Tết đoàn viên gia đình sung túc</h3>
+                    <p class="nqd-mini-line">Về nhà đi con</p>
+                    <p class="nqd-mini-line">Nhớ trăng đêm nào – Cả nhà bên nhau rộn rã tiếng cười</p>
+                    <p class="nqd-mini-line">Về nhà đi con</p>
+                    <p class="nqd-mini-line">Mẹ ngồi trông con – Mong chuyến xe đừng muộn</p>
+                    <p class="nqd-mini-line">Về nhà đi con , về nhà đi con</p>
+                </div>
+
+                <!-- Cột phải -->
+                <div class="nqd-mini-col">
+                    <h3 class="nqd-mini-title nqd-mini-title-right">Tết giàu có</h3>
+                    <p class="nqd-mini-line">Giàu có tình thân</p>
+                    <p class="nqd-mini-line">Giàu có tiếng cười</p>
+                    <p class="nqd-mini-line">Giàu có không khí sum vầy</p>
+                    <p class="nqd-mini-line">Giàu có kỉ niệm tuổi thơ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- BỘ SƯU TẬP / SLIDER 8 SẢN PHẨM -->
+    <section class="nqd-collection-section">
+        <div class="nqd-collection-overlay"></div>
+
+        <div class="nqd-collection-inner">
+            <!-- Phần tiêu đề -->
+            <div class="nqd-collection-heading">
+                <p class="nqd-collection-subtitle1">
+                    Đón trung thu 2025 NQD CAKE cho ra mắt bộ sưu tập
+                </p>
+                <p class="nqd-collection-subtitle2">
+                    PHÚ QUÝ ĐOÀN VIÊN DUY NHẤT CHỈ CÓ MÙA NÀY
+                </p>
+
+                <h2 class="nqd-collection-title">BỘ SƯU TẬP</h2>
+            </div>
+
+            <!-- Slider -->
+            <div class="nqd-collection-slider">
+                <button class="nqd-collection-arrow nqd-collection-arrow-prev">&#10094;</button>
+
+                <div class="nqd-collection-window">
+                    <div class="nqd-collection-track">
+                        <!-- Lấy tối đa 8 sản phẩm -->
+                        <th:block th:each="p, stat : ${products}"
+                                  th:if="${stat.index} < 8">
+                            <div class="nqd-collection-card">
+                                <div class="nqd-card-img">
+                                    <!-- hiện tại ảnh trống, sau này có thể th:src -->
+                                     <img th:src="${p.imageUrl}" th:alt="${p.name}"> 
+                                </div>
+
+                                <div class="nqd-card-body">
+                                    <p class="nqd-card-subtitle"
+                                       th:text="${p.shortDescription} ?: 'Bánh trung thu cao cấp'">
+                                        Bánh trung thu cao cấp
+                                    </p>
+
+                                    <h4 class="nqd-card-title"
+                                        th:text="${p.name}">
+                                        Thập cẩm yến sào, gà quay 2 trứng, 230g
+                                    </h4>
+
+                                    <p class="nqd-card-weight"
+                                       th:text="${p.weight} + ' g'">
+                                        230 g
+                                    </p>
+
+                                    <p class="nqd-card-price"
+                                       th:text="${#numbers.formatDecimal(p.price,0,'POINT',0,'POINT')} + ' đ'">
+                                        200,000 đ
+                                    </p>
+
+                                    <a class="nqd-card-btn"
+                                       th:href="@{'/products/' + ${p.id}}">
+                                        XEM
+                                    </a>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+
+                <button class="nqd-collection-arrow nqd-collection-arrow-next">&#10095;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- BÁNH NƯỚNG / BÁNH DẺO TRUYỀN THỐNG -->
+    <section class="nqd-classic-section">
+        <div class="nqd-classic-overlay"></div>
+
+        <div class="nqd-classic-inner">
+            <!-- Khối BÁNH NƯỚNG -->
+            <div class="nqd-classic-block">
+                <h2 class="nqd-classic-title">Bánh nướng truyền thống</h2>
+                <p class="nqd-classic-subtitle">
+                    Hòa quyện đất trời – Hương vị truyền thống – Tuổi thơ ùa về – Gia đình sum túc
+                </p>
+                <p class="nqd-classic-desc">
+                    Cầu kỳ từ khâu chọn loại bột mì mịn nhất để có lớp vỏ vàng ươm thơm lừng.
+                </p>
+
+                <p class="nqd-classic-desc">
+                    Cầu kỳ đến việc chọn loại trứng tròn đều muôn vạn quả như một, thấm muối vừa vặn, sắc sảo mặn mà mà không làm phiền hà vị giác người ăn.
+                </p>
+
+                <div class="nqd-classic-row">
+                    <!-- Ảnh 1 -->
+                    <div class="nqd-classic-card">
+                        <img src="https://mauweb.monamedia.net/monacake/wp-content/uploads/2018/06/banh-nuong-1.jpg" alt="Bánh nướng 1" class="img-shift-down">
+                    </div>
+                    <!-- Ảnh 2 -->
+                    <div class="nqd-classic-card">
+                        <img src="https://mauweb.monamedia.net/monacake/wp-content/uploads/2018/06/banh-nuong-2.jpg" alt="Bánh nướng 2">
+                    </div>
+                    <!-- Ảnh 3 -->
+                    <div class="nqd-classic-card">
+                        <img src="https://mauweb.monamedia.net/monacake/wp-content/uploads/2018/06/banh-nuong-3.jpg" alt="Bánh nướng 3">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Đường kẻ mảnh ngăn 2 phần -->
+            <div class="nqd-classic-divider"></div>
+
+            <!-- Khối BÁNH DẺO -->
+            <div class="nqd-classic-block">
+                <h2 class="nqd-classic-title">Bánh dẻo truyền thống</h2>
+                <p class="nqd-classic-subtitle">
+                    Dịu thơm hương bưởi – Bùi bùi nhân đậu – Dẻo dẻo vỏ nếp – Hạnh phúc tràn đầy
+                </p>
+                <p class="nqd-classic-desc">
+                    Bánh dẻo đậu xanh thoạt nhìn không cầu kì nhưng có nét kiêu sa,
+                    nhìn đơn giản nhưng thấm đậm trong đó là tình cảm “ đoàn viên gia đình “ và nhất là tình yêu khăng khí giữa vợ chồng với nhau.
+                </p>
+
+                <p class="nqd-classic-desc">
+                    Quý lắm giữa chốn đô thành, giữa tất bật người người nhà nhà có một cái gì đó gọi là hương vị gia đình – thật ấm áp biết bao.
+                </p>
+
+                <div class="nqd-classic-row">
+                    <!-- Ảnh 1 -->
+                    <div class="nqd-classic-card">
+                        <img src="https://mauweb.monamedia.net/monacake/wp-content/uploads/2018/06/banh-deo-1.jpg" alt="Bánh dẻo 1">
+                    </div>
+                    <!-- Ảnh 2 -->
+                    <div class="nqd-classic-card">
+                        <img src="https://mauweb.monamedia.net/monacake/wp-content/uploads/2018/06/banh-deo-2.jpg" alt="Bánh dẻo 2">
+                    </div>
+                    <!-- Ảnh 3 -->
+                    <div class="nqd-classic-card">
+                        <img src="https://mauweb.monamedia.net/monacake/wp-content/uploads/2018/06/banh-deo-3.jpg" alt="Bánh dẻo 3" class="img-shift-down2" >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CÂU CHUYỆN TÂM HUYẾT -->
+    <section class="nqd-story-section">
+        <div class="nqd-story-heading">
+            <h2>Cái tên Mona Cake chúng tôi đặt hết tấm lòng mình vào đấy</h2>
+            <p>Thiên là trời, trong lương thiện, thiện lương nhằm hướng đến giá trị cao nhất trong cuộc sống</p>
+            <p class="nqd-story-subtitle">CHÂN – THIỆN – MỸ</p>
+            <div class="nqd-story-divider">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <!-- Hàng 1: ảnh trái, chữ phải -->
+        <div class="nqd-story-row">
+            <div class="nqd-story-image">
+                <img src="https://mauweb.monamedia.net/monacake/wp-content/uploads/2018/06/banner-1-550x420.png"
+                     alt="Hộp bánh trung thu 1">
+            </div>
+            <div class="nqd-story-text">
+                <h3>Chân thành mang tết yêu thương</h3>
+                <p>
+                    Hơn ai hết xuất thân từ vùng quê, từ nhỏ tôi đã yêu đã hiểu đã quý trọng cái không khí tết trung thu,
+                    đã biết nó không phải chỉ là một dịp lễ hội một năm có 1 lần mà là một 1 lần đó người ta nhận được
+                    gì và cho đi những gì.
+                </p>
+            </div>
+        </div>
+
+        <!-- Hàng 2: chữ trái, ảnh phải -->
+        <div class="nqd-story-row nqd-story-row-reverse">
+            <div class="nqd-story-image">
+                <img src="https://mauweb.monamedia.net/monacake/wp-content/uploads/2018/06/banner-2.png"
+                     alt="Hộp bánh trung thu 2">
+            </div>
+            <div class="nqd-story-text">
+                <h3>Thiện tâm thiện ý sức khỏe người dùng</h3>
+                <p>
+                    Làm trong ngành nhà hàng khách sạn nên từ lâu tôi đã rất kĩ tính với chất lượng món ăn,
+                    khi tôi học nấu ăn tôi cũng đòi hỏi rất khắt khe ở mình,
+                    có thể tạm chấp nhận nấu chưa ngon nhưng tuyệt nhiên không cho mình cẩu thả về chất lượng.
+                </p>
+            </div>
+        </div>
+
+        <!-- Hàng 3: ảnh trái, chữ phải -->
+        <div class="nqd-story-row">
+            <div class="nqd-story-image">
+                <img src="https://mauweb.monamedia.net/monacake/wp-content/uploads/2018/06/banner-3.png"
+                     alt="Hộp bánh trung thu 3">
+            </div>
+            <div class="nqd-story-text">
+                <h3>Mỹ miều hộp bánh đài trang trong ngoài</h3>
+                <p>
+                    Tôi chủ bánh YUD Moon Cake với kinh nghiệm 5 năm trong ngành nhà hàng khách sạn tự tin rằng
+                    mình luôn đưa ra những sản phẩm hoàn hảo từ nội dung đến hình thức.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAM KẾT & CẢM NHẬN KHÁCH HÀNG -->
+    <section class="nqd-commit-section">
+        <div class="nqd-commit-inner">
+
+            <!-- Cột trái: Cam kết -->
+            <div class="nqd-commit-left">
+                <h2 class="nqd-commit-title">YUD Moon Cake cam kết với khách hàng</h2>
+                <div class="nqd-commit-divider">
+                    <span></span><i class="fa-solid fa-cake-candles"></i><span></span>
+                </div>
+
+                <ul class="nqd-commit-list">
+                    <li>Bánh được làm 100% không hóa chất</li>
+                    <li>Độ mềm dẻo của vỏ bánh hoàn toàn không dùng nước tro</li>
+                    <li>Sử dụng máy hút chân không nhằm tăng thời gian sử dụng bánh</li>
+                    <li>Bánh được làm theo từng mẻ đặt hàng, tuyệt đối không có bánh cũ, bánh quá hạn</li>
+                    <li>Hoàn tiền 100% nếu phát hiện bánh lỗi khi mua về</li>
+                </ul>
+            </div>
+
+            <!-- Cột phải: Cảm nhận khách hàng (slider 3 slide) -->
+            <div class="nqd-commit-right">
+                <h2 class="nqd-commit-title">Cảm nhận khách hàng</h2>
+                <div class="nqd-commit-divider">
+                    <span></span><i class="fa-solid fa-cake-candles"></i><span></span>
+                </div>
+
+                <div class="nqd-testimonial-slider">
+                    <!-- nút mũi tên trái -->
+                    <button class="nqd-testimonial-arrow nqd-testimonial-arrow-prev">
+                        &#10094;
+                    </button>
+
+                    <!-- vùng chứa slide -->
+                    <div class="nqd-testimonial-window">
+                        <div class="nqd-testimonial-slide active">
+                            <p class="nqd-testimonial-name">
+                                Anh Duy Khánh ( Trùm bất động sản – Bãi Cháy, Hạ Long )
+                            </p>
+                            <p class="nqd-testimonial-text">
+                                Nhà mình thì ai cũng thích ăn bánh trung thu nhưng giờ thấy báo đài nói
+                                nhiều về sinh thực phẩm nên khá lo. Từ khi được bạn giới thiệu bánh YUD Moon
+                                Cake, mình yên tâm hơn vì bánh thơm ngon, ít ngọt, nhìn là thấy làm rất sạch.
+                                Năm nào cả nhà cũng đặt lại để biếu tặng người thân.
+                            </p>
+                        </div>
+
+                        <div class="nqd-testimonial-slide">
+                            <p class="nqd-testimonial-name">
+                                Anh Huy Thông ( Chủ Tịch – Uông Bí, Quảng Ninh )
+                            </p>
+                            <p class="nqd-testimonial-text">
+                                Công ty mình hay đặt hộp quà trung thu tặng khách. Từ ngày chuyển sang
+                                YUD Moon Cake thì khách phản hồi tốt hơn hẳn, hộp đẹp, bánh đa dạng vị,
+                                đặc biệt là không quá ngọt. Dịch vụ giao đúng hẹn, hỗ trợ rất nhiệt tình.
+                            </p>
+                        </div>
+
+                        <div class="nqd-testimonial-slide">
+                            <p class="nqd-testimonial-name">
+                                Anh Văn Hiếu ( Đại Gia – Bắc Giang)
+                            </p>
+                            <p class="nqd-testimonial-text">
+                                Mỗi mùa trung thu là mình lại đặt vài hộp YUD Moon Cake để gửi cho người thân.
+                                Bánh vừa miệng, ông bà lớn tuổi cũng ăn được. Mình thích nhất là phần
+                                cam kết không hóa chất, có cảm giác an toàn hơn khi cho con cháu dùng.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- nút mũi tên phải -->
+                    <button class="nqd-testimonial-arrow nqd-testimonial-arrow-next">
+                        &#10095;
+                    </button>
+                </div>
+
+                <!-- dots -->
+                <div class="nqd-testimonial-dots">
+                    <button type="button" class="active"></button>
+                    <button type="button"></button>
+                    <button type="button"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</main>
+<!-- FOOTER dùng fragment -->
+<div th:replace="layout/footer :: nqdFooterFragment"></div>
+
+<!-- JS cho trang home -->
+<script th:src="@{/js/home-index.js}"></script>
+<script th:src="@{/js/header.js}"></script>
+<script th:src="@{/js/cart.js}"></script>
+
+</body>
+</html>

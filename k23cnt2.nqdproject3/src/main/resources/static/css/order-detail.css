@@ -1,0 +1,101 @@
+.nqd-order-detail-page {
+    background: url("/images/trungthubg.png") top center / cover no-repeat fixed;
+    padding: 40px 0 60px;
+}
+
+.nqd-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.nqd-order-detail-wrapper {
+    display: grid;
+    grid-template-columns: 1.2fr 1.8fr;
+    gap: 24px;
+}
+
+.nqd-order-info,
+.nqd-order-detail-table-wrapper {
+    background: rgba(255,255,255,0.96);
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.nqd-order-detail-title {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 22px;
+    color: #b22222;
+}
+
+.nqd-order-info p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+.nqd-order-detail-table-wrapper h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* table */
+.nqd-order-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.nqd-order-detail-table th,
+.nqd-order-detail-table td {
+    padding: 8px 6px;
+    border-bottom: 1px solid #eee;
+}
+
+.nqd-order-detail-table th {
+    background: #fff8f0;
+    font-weight: 700;
+}
+
+.nqd-order-detail-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    color: #b22222;
+}
+
+.nqd-order-detail-actions {
+    margin-top: 14px;
+}
+
+/* nút */
+.nqd-btn {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.nqd-btn-secondary {
+    background: #fff;
+    color: #f23922;
+    border: 1px solid #f5a56b;
+}
+
+.nqd-btn-secondary:hover {
+    background: #fff5eb;
+}
+
+/* mobile */
+@media (max-width: 900px) {
+    .nqd-order-detail-wrapper {
+        grid-template-columns: 1fr;
+    }
+}

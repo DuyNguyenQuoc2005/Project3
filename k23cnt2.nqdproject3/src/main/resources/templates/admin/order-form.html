@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ?: 'Quản lý đơn hàng'">Quản lý đơn hàng</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-order-form.css}">
+</head>
+<body>
+
+<div class="adm-wrapper">
+
+    <!-- NÚT MỞ / THU GỌN SIDEBAR -->
+    <div class="adm-menu-toggle"
+         onclick="document.querySelector('.adm-sidebar').classList.toggle('active');
+                  document.querySelector('.adm-wrapper').classList.toggle('sidebar-active');">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- ========== SIDEBAR CHUNG (GIỐNG DASHBOARD) ========== -->
+    <aside class="adm-sidebar">
+        <div class="adm-sidebar-inner">
+            <!-- Logo -->
+            <a th:href="@{/admin/dashboard}" class="adm-logo-row">
+                <div class="adm-logo-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="adm-logo-text">
+                    <span class="adm-logo-title">YUD ADMIN</span>
+                    <span class="adm-logo-sub">Dashboard</span>
+                </div>
+            </a>
+
+            <!-- Menu -->
+            <nav class="adm-menu">
+                <a th:href="@{/admin/dashboard}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div class="adm-menu-text">Tổng quan</div>
+                </a>
+
+                <!-- TRANG HIỆN TẠI: QUẢN LÝ SẢN PHẨM -->
+                <a th:href="@{/admin/products}" class="adm-menu-item ">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý sản phẩm</div>
+                </a>
+
+                <a th:href="@{/admin/customers}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý khách hàng</div>
+                </a>
+
+                <a th:href="@{/admin/accounts}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý Admin</div>
+                </a>
+
+                <a th:href="@{/admin/orders}" class="adm-menu-item adm-menu-item--active">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý đơn hàng</div>
+                </a>
+
+                <a th:href="@{/admin/feedbacks}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-regular fa-comment-dots"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý góp ý</div>
+                </a>
+            </nav>
+
+            <!-- Bottom -->
+            <div class="adm-sidebar-bottom">
+                <a th:href="@{/}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div class="adm-menu-text">Về trang bán hàng</div>
+                </a>
+
+                <a th:href="@{/account/logout}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <div class="adm-menu-text">Đăng xuất</div>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="adm-main">
+
+        <header class="adm-main-header">
+            <div>
+                <h1 th:text="${pageTitle}">Đơn hàng</h1>
+                <span class="adm-main-subtitle">Thông tin chi tiết đơn hàng</span>
+            </div>
+        </header>
+
+        <section class="ord-content-form">
+            <form th:action="@{/admin/orders/save}"
+                  th:object="${order}"
+                  method="post"
+                  class="ord-form">
+
+                <input type="hidden" th:field="*{id}"/>
+
+                <!-- Khách hàng -->
+                <div class="ord-form-group">
+                    <label class="ord-label">Khách hàng (tài khoản)</label>
+                    <select th:field="*{customer.id}" class="ord-input">
+                        <option value="" th:if="${#lists.isEmpty(customers)}">-- Chưa có khách hàng --</option>
+                        <option th:each="c : ${customers}"
+                                th:value="${c.id}"
+                                th:text="${c.username + ' - ' + (c.fullName != null ? c.fullName : '')}">
+                        </option>
+                    </select>
+                    <span class="ord-hint">Chọn tài khoản khách đã đăng ký.</span>
+                </div>
+
+                <!-- Người nhận + phone -->
+                <div class="ord-form-row">
+                    <div class="ord-form-group">
+                        <label class="ord-label">Họ tên người nhận</label>
+                        <input type="text" th:field="*{fullName}" class="ord-input">
+                    </div>
+
+                    <div class="ord-form-group">
+                        <label class="ord-label">Điện thoại</label>
+                        <input type="text" th:field="*{phone}" class="ord-input">
+                    </div>
+                </div>
+
+                <!-- Địa chỉ giao -->
+                <div class="ord-form-group">
+                    <label class="ord-label">Địa chỉ giao hàng</label>
+                    <textarea th:field="*{shipAddress}" class="ord-textarea" rows="2"></textarea>
+                </div>
+
+                <!-- Ngày đặt (chỉ hiển thị) + trạng thái -->
+                <div class="ord-form-row">
+                    <div class="ord-form-group">
+                        <label class="ord-label">Ngày đặt</label>
+                        <input type="text"
+                               class="ord-input ord-input--readonly"
+                               th:value="${order.orderDate != null ? #temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm') : 'Sẽ tự tạo khi lưu'}"
+                               readonly>
+                    </div>
+
+                    <div class="ord-form-group">
+                        <label class="ord-label">Trạng thái</label>
+                        <select th:field="*{status}" class="ord-input">
+                            <option value="PENDING">Chờ xử lý</option>
+                            <option value="PROCESSING">Đang xử lý</option>
+                            <option value="SHIPPING">Đang giao hàng</option>
+                            <option value="COMPLETED">Hoàn thành</option>
+                            <option value="CANCELED">Đã huỷ</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <!-- Thanh toán + tổng tiền -->
+                <div class="ord-form-row">
+                    <div class="ord-form-group">
+                        <label class="ord-label">Hình thức thanh toán</label>
+                        <select th:field="*{paymentMethod}" class="ord-input">
+                            <option value="COD">Thanh toán khi nhận hàng (COD)</option>
+                            <option value="MOMO">Ví MoMo</option>
+                            <option value="VNPAY">VNPAY</option>
+                        </select>
+
+                    </div>
+
+                    <div class="ord-form-group">
+                        <label class="ord-label">Tổng tiền (đ)</label>
+                        <input type="number" step="1000" min="0"
+                               th:field="*{totalAmount}"
+                               class="ord-input">
+                        <span class="ord-hint">Nếu đã có chi tiết đơn, tổng tiền nên được tính tự động.</span>
+                    </div>
+                </div>
+
+                <!-- Ghi chú -->
+                <div class="ord-form-group">
+                    <label class="ord-label">Ghi chú</label>
+                    <textarea th:field="*{note}" class="ord-textarea" rows="3"></textarea>
+                </div>
+
+                <!-- Actions -->
+                <div class="ord-form-actions">
+                    <button type="submit" class="ord-btn ord-btn-primary ord-btn-lg">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Lưu đơn hàng</span>
+                    </button>
+
+                    <a th:href="@{/admin/orders}" class="ord-btn ord-btn-secondary">
+                        Hủy và quay lại
+                    </a>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

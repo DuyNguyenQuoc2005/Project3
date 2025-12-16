@@ -1,0 +1,182 @@
+/* ===== NỀN TRANG CHECKOUT ===== */
+.nqd-checkout-page {
+    background: url("/images/trungthubg.png") top center / cover no-repeat fixed;
+    padding: 40px 0 60px;
+    font-family: inherit;
+}
+
+/* Bọc toàn bộ nội dung để không bị sát 2 bên */
+.nqd-checkout-wrapper {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 16px;
+
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+/* ===== CỘT TRÁI: FORM THÔNG TIN ===== */
+.nqd-checkout-left {
+    background: rgba(255, 247, 230, 0.96);
+    padding: 22px 20px 18px;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.nqd-checkout-title {
+    font-size: 22px;
+    margin-bottom: 16px;
+    color: #c0392b;
+    font-weight: 700;
+}
+
+.nqd-checkout-form .nqd-form-group {
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nqd-checkout-form label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.nqd-checkout-form input,
+.nqd-checkout-form textarea {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #e0d4c4;
+    font-size: 14px;
+    outline: none;
+    background: #fff;
+}
+
+.nqd-checkout-form input:focus,
+.nqd-checkout-form textarea:focus {
+    border-color: #f23922;
+    box-shadow: 0 0 0 2px rgba(242, 57, 34, 0.15);
+}
+
+.nqd-checkout-form textarea {
+    min-height: 70px;
+    resize: vertical;
+}
+
+/* Payment method */
+.nqd-payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.nqd-payment-options label {
+    font-weight: 500;
+}
+
+.nqd-payment-options input {
+    margin-right: 6px;
+}
+
+/* Nút đặt hàng */
+.nqd-btn.nqd-btn-primary {
+    margin-top: 10px;
+    background: linear-gradient(135deg, #f8603c, #f2a32c);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    text-decoration: none;
+}
+
+.nqd-btn.nqd-btn-primary:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+}
+
+/* ===== CỘT PHẢI: TÓM TẮT ĐƠN HÀNG ===== */
+.nqd-checkout-right {
+    background: rgba(255, 255, 255, 0.97);
+    padding: 18px 18px 20px;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.nqd-checkout-subtitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #c0392b;
+    font-weight: 700;
+}
+
+/* danh sách sản phẩm bên phải */
+.nqd-summary-list {
+    border-top: 1px solid #f1e3d0;
+    margin-top: 6px;
+}
+
+.nqd-summary-header,
+.nqd-summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 14px;
+}
+
+.nqd-summary-header {
+    font-weight: 600;
+    border-bottom: 1px solid #f1e3d0;
+    margin-bottom: 4px;
+}
+
+.nqd-summary-name {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nqd-summary-qty {
+    font-size: 12px;
+    color: #666;
+}
+
+.nqd-summary-line {
+    font-weight: 600;
+    color: #c0392b;
+}
+
+/* tổng tiền */
+.nqd-summary-total {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px dashed #e0d4c4;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 700;
+    color: #c0392b;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .nqd-checkout-wrapper {
+        grid-template-columns: 1fr;
+        padding: 0 12px;
+    }
+
+    .nqd-checkout-left,
+    .nqd-checkout-right {
+        border-radius: 14px;
+    }
+}

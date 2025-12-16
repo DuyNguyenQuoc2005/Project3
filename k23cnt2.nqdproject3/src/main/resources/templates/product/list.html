@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách bánh trung thu</title>
+
+    <!-- CSS dùng chung -->
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <!-- CSS riêng cho trang danh sách -->
+    <link rel="stylesheet" th:href="@{/css/product-list.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+
+<!-- HEADER fragment -->
+<div th:replace="~{layout/header :: header}"></div>
+
+<main class="nqd-product-page">
+
+    <!-- BREADCRUMB -->
+    <section class="nqd-breadcrumb">
+        <div class="nqd-container nqd-breadcrumb-inner">
+            <a th:href="@{/}">Trang chủ</a>
+            <span>/</span>
+            <span>Bánh</span>
+        </div>
+    </section>
+
+    <!-- MAIN LAYOUT -->
+    <section class="nqd-product-main">
+        <div class="nqd-container nqd-product-layout">
+
+            <!-- SIDEBAR: LỌC GIÁ + BANNER -->
+            <aside class="nqd-sidebar">
+                <h3 class="nqd-sidebar-title">Lọc theo giá</h3>
+
+                <form id="priceFilterForm"
+                      th:action="@{/products}"
+                      method="get"
+                      class="nqd-price-form">
+
+                    <div class="nqd-price-range">
+                        <label for="minPrice">Giá thấp nhất</label>
+                        <input type="range"
+                               id="minPrice"
+                               name="minPrice"
+                               min="0" max="1000000" step="10000"
+                               th:value="${minPrice}">
+
+                        <label for="maxPrice">Giá cao nhất</label>
+                        <input type="range"
+                               id="maxPrice"
+                               name="maxPrice"
+                               min="0" max="1000000" step="10000"
+                               th:value="${maxPrice}">
+
+                    </div>
+
+                    <div class="nqd-price-label">
+                        Giá từ
+                        <span id="minPriceLabel"
+                              th:text="${#numbers.formatDecimal(minPrice,0,'POINT',0,'POINT')} + ' đ'">
+                            0 đ
+                        </span>
+                        –
+                        <span id="maxPriceLabel"
+                              th:text="${#numbers.formatDecimal(maxPrice,0,'POINT',0,'POINT')} + ' đ'">
+                            1.000.000 đ
+                        </span>
+                    </div>
+
+                    <!-- giữ lại category khi lọc giá -->
+                    <input type="hidden" name="categoryId"
+                           th:value="${selectedCategoryId}">
+                </form>
+
+                <!-- Banner bên trái (ảnh bạn thay sau) -->
+                <div class="nqd-sidebar-banner">
+                    <img th:src="@{/images/sidebar-banner.png}"
+                         alt="Khuyến mãi trung thu"
+                         onerror="this.style.display='none'">
+                </div>
+            </aside>
+
+            <!-- CONTENT: TOOLBAR + GRID SẢN PHẨM -->
+            <section class="nqd-product-content">
+
+                <!-- Toolbar: tiêu đề + LỌC CATEGORY (ở bên phải) -->
+                <div class="nqd-product-toolbar">
+                    <div class="nqd-toolbar-left">
+                        <h1 class="nqd-page-title">Bánh trung thu</h1>
+                        <p class="nqd-toolbar-sub">
+                            Thưởng thức bộ sưu tập bánh trung thu thơm ngon, giao hàng tận nơi.
+                        </p>
+                    </div>
+
+                    <div class="nqd-toolbar-right">
+                        <!-- LỌC THEO LOẠI BÁNH (thay cho Thứ tự) -->
+                        <form id="categoryForm"
+                              th:action="@{/products}"
+                              method="get"
+                              class="nqd-category-filter">
+                            <label for="categoryId">Loại bánh:</label>
+                            <select id="categoryId"
+                                    name="categoryId"
+                                    onchange="this.form.submit()">
+                                <option value=""
+                                        th:selected="${selectedCategoryId == null}">
+                                    Tất cả
+                                </option>
+
+                                <option th:each="c : ${categories}"
+                                        th:value="${c.id}"
+                                        th:selected="${selectedCategoryId != null and c.id == selectedCategoryId}"
+                                        th:text="${c.name}">
+                                </option>
+                            </select>
+
+                            <!-- giữ lại khoảng giá khi đổi category -->
+                            <input type="hidden" name="minPrice"
+                                   th:value="${minPrice}">
+                            <input type="hidden" name="maxPrice"
+                                   th:value="${maxPrice}">
+                        </form>
+                    </div>
+                </div>
+
+                <!-- GRID 3x3 -->
+                <div class="nqd-product-grid">
+                    <div class="nqd-product-card"
+                         th:each="p : ${products}">
+
+                        <!-- Link bọc ảnh + nội dung để click đi vào detail -->
+                        <a class="nqd-card-link"
+                           th:href="@{'/products/' + ${p.id}}">
+
+                            <div class="nqd-card-img">
+                                <img th:src="${p.imageUrl}"
+                                     th:alt="${p.name}">
+                            </div>
+
+                            <div class="nqd-card-body">
+                                <h3 class="nqd-card-title"
+                                    th:text="${p.name}">
+                                    Tên bánh
+                                </h3>
+                                <p class="nqd-card-flavor"
+                                   th:text="${p.flavor}">
+                                    Hương vị
+                                </p>
+                                <p class="nqd-card-weight"
+                                   th:text="${p.weight} + ' g'">
+                                    230 g
+                                </p>
+                            </div>
+                        </a>
+
+                        <div class="nqd-card-footer">
+                            <div class="nqd-card-price"
+                                 th:text="${#numbers.formatDecimal(p.price,0,'POINT',0,'POINT')} + ' đ'">
+                                120.000 đ
+                            </div>
+                            <button type="button"
+                                    class="nqd-card-btn js-add-to-cart-list"
+                                    th:data-product-id="${p.id}">
+                                Thêm vào giỏ
+                            </button>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Không có sản phẩm -->
+                    <p class="nqd-empty" th:if="${#lists.isEmpty(products)}">
+                        Chưa có sản phẩm nào phù hợp.
+                    </p>
+                </div>
+
+                <!-- PAGINATION -->
+                <div class="nqd-pagination"
+                     th:if="${totalPages > 1}">
+                    <!-- Prev -->
+                    <a class="nqd-page-arrow"
+                       th:classappend="${currentPage == 0} ? ' nqd-page-arrow--disabled' : ''"
+                       th:href="@{'/products'(page=${currentPage - 1},
+                                            categoryId=${selectedCategoryId},
+                                            minPrice=${minPrice},
+                                            maxPrice=${maxPrice})}">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </a>
+
+                    <div class="nqd-page-info">
+                        <span>Trang</span>
+                        <span class="nqd-page-current"
+                              th:text="${currentPage + 1}">1</span>
+                        <span>/</span>
+                        <span th:text="${totalPages}">1</span>
+                    </div>
+
+                    <!-- Next -->
+                    <a class="nqd-page-arrow"
+                       th:classappend="${currentPage + 1 >= totalPages} ? ' nqd-page-arrow--disabled' : ''"
+                       th:href="@{'/products'(page=${currentPage + 1},
+                                            categoryId=${selectedCategoryId},
+                                            minPrice=${minPrice},
+                                            maxPrice=${maxPrice})}">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                </div>
+
+            </section>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER fragment -->
+<div th:replace="~{layout/footer :: nqdFooterFragment}"></div>
+
+<script th:src="@{/js/header.js}"></script>
+<script th:src="@{/js/product-list.js}"></script>
+<script th:src="@{/js/cart.js}"></script>
+</body>
+</html>

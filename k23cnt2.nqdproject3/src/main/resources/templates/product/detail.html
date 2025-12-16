@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${product.name}">Chi tiết sản phẩm</title>
+
+    <!-- CSS dùng chung -->
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <!-- CSS riêng cho trang chi tiết -->
+    <link rel="stylesheet" th:href="@{/css/product-detail.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+
+<!-- HEADER dùng fragment -->
+<div th:replace="~{layout/header :: header}"></div>
+
+<main class="nqd-detail-page">
+<!--    &lt;!&ndash; BREADCRUMB &ndash;&gt;-->
+<!--    <section class="nqd-breadcrumb">-->
+<!--        <div class="nqd-breadcrumb-inner">-->
+<!--            <a th:href="@{/products}">Cửa Hàng</a>-->
+<!--            <span>/</span>-->
+<!--            <span>Chi Tiết</span>-->
+<!--        </div>-->
+<!--    </section>-->
+    <section class="nqd-detail">
+
+        <!-- Cột trái: ảnh + thông tin bánh -->
+        <div class="nqd-detail-left">
+
+            <div class="nqd-img-box">
+                <img th:src="${product.imageUrl}" th:alt="${product.name}">
+            </div>
+
+            <!-- FORM THÊM VÀO GIỎ -->
+            <div class="nqd-info">
+                <h1 class="nqd-detail-title" th:text="${product.name}">Tên bánh trung thu</h1>
+
+                <p class="nqd-detail-text">
+                    <strong>Hương vị:</strong>
+                    <span th:text="${product.flavor}">Thập cẩm</span>
+                </p>
+                <p class="nqd-detail-text">
+                    <strong>Trọng lượng:</strong>
+                    <span th:text="${product.weight}">230</span> g
+                </p>
+                <p class="nqd-detail-text">
+                    <strong>Số trứng:</strong>
+                    <span th:text="${product.eggCount}">2</span>
+                </p>
+
+                <p class="nqd-price">
+                    Giá:
+                    <span th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT')} + ' đ'">
+                        120.000 đ
+                    </span>
+                </p>
+
+                <p class="nqd-short-desc" th:text="${product.shortDescription}">
+                    Mô tả ngắn sản phẩm sẽ hiển thị ở đây.
+                </p>
+
+                <!-- FORM gửi productId + quantity lên /cart/add -->
+                <form th:action="@{/cart/add}" method="post" class="nqd-detail-form">
+
+                    <!-- id sản phẩm -->
+                    <input type="hidden" name="productId" th:value="${product.id}"/>
+
+                    <!-- Số lượng + nút +/- -->
+                    <div class="nqd-quantity-block">
+                        <span class="nqd-qty-label">Số lượng:</span>
+
+                        <div class="nqd-qty-control">
+                            <button type="button" class="nqd-qty-btn" data-action="minus">−</button>
+                            <input id="qtyInput"
+                                   name="quantity"
+                                   type="text"
+                                   value="1"
+                                   readonly>
+                            <button type="button" class="nqd-qty-btn" data-action="plus">+</button>
+                        </div>
+                    </div>
+
+                    <div class="nqd-detail-actions">
+                        <button type="submit" class="nqd-btn nqd-btn-cart js-add-to-cart-detail">
+                            Thêm vào giỏ
+                        </button>
+                    </div>
+                </form>
+
+
+                <!-- Mô tả chi tiết -->
+                <div class="nqd-long-desc" th:utext="${product.description}">
+                    Nội dung mô tả chi tiết sản phẩm…
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột phải: khung dịch vụ -->
+        <aside class="nqd-service-box">
+            <div class="nqd-service-item">
+                <img th:src="@{/images/icon_service_1.webp}" alt="Giao hàng free nội thành">
+                <div class="nqd-service-text">
+                    <h4>GIAO HÀNG FREE NỘI THÀNH</h4>
+                    <p>Giao free trong nội thành HN và HCM.</p>
+                </div>
+            </div>
+
+            <div class="nqd-service-item">
+                <img th:src="@{/images/icon_service_2.webp}" alt="Trả hàng trong vòng 24h">
+                <div class="nqd-service-text">
+                    <h4>TRẢ HÀNG TRONG VÒNG 24H</h4>
+                    <p>Hỗ trợ đổi trả khi sản phẩm có lỗi.</p>
+                </div>
+            </div>
+
+            <div class="nqd-service-item">
+                <img th:src="@{/images/icon_service_3.webp}" alt="Kiểm tra hàng khi nhận">
+                <div class="nqd-service-text">
+                    <h4>KIỂM TRA HÀNG KHI NHẬN</h4>
+                    <p>Được mở hộp kiểm tra trước khi thanh toán.</p>
+                </div>
+            </div>
+
+            <div class="nqd-service-item">
+                <img th:src="@{/images/icon_service_4.webp}" alt="Thanh toán COD">
+                <div class="nqd-service-text">
+                    <h4>THANH TOÁN COD</h4>
+                    <p>Thanh toán khi nhận hàng, cực kỳ tiện lợi.</p>
+                </div>
+            </div>
+        </aside>
+
+    </section>
+</main>
+
+<!-- FOOTER -->
+<div th:replace="~{layout/footer :: nqdFooterFragment}"></div>
+
+<script th:src="@{/js/header.js}"></script>
+<script th:src="@{/js/cart.js}"></script>
+<!-- JS nhỏ để tăng/giảm số lượng -->
+<script>
+    (function () {
+        const qtyInput = document.getElementById('qtyInput');
+        if (!qtyInput) return;
+
+        const buttons = document.querySelectorAll('.nqd-qty-btn');
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                let current = parseInt(qtyInput.value || '1', 10);
+                if (isNaN(current) || current < 1) current = 1;
+
+                if (this.dataset.action === 'minus') {
+                    current = Math.max(1, current - 1);
+                } else {
+                    current += 1;
+                }
+                qtyInput.value = current;
+            });
+        });
+    })();
+</script>
+
+</body>
+</html>

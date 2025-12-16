@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ?: 'Chỉnh sửa góp ý'">Chỉnh sửa góp ý</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-feedback-form.css}">
+</head>
+<body>
+
+<div class="adm-wrapper">
+
+    <!-- NÚT MỞ / THU GỌN SIDEBAR -->
+    <div class="adm-menu-toggle"
+         onclick="document.querySelector('.adm-sidebar').classList.toggle('active');
+                  document.querySelector('.adm-wrapper').classList.toggle('sidebar-active');">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- ========== SIDEBAR CHUNG (GIỐNG DASHBOARD) ========== -->
+    <aside class="adm-sidebar">
+        <div class="adm-sidebar-inner">
+            <!-- Logo -->
+            <a th:href="@{/admin/dashboard}" class="adm-logo-row">
+                <div class="adm-logo-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="adm-logo-text">
+                    <span class="adm-logo-title">YUD ADMIN</span>
+                    <span class="adm-logo-sub">Dashboard</span>
+                </div>
+            </a>
+
+            <!-- Menu -->
+            <nav class="adm-menu">
+                <a th:href="@{/admin/dashboard}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div class="adm-menu-text">Tổng quan</div>
+                </a>
+
+                <!-- TRANG HIỆN TẠI: QUẢN LÝ SẢN PHẨM -->
+                <a th:href="@{/admin/products}" class="adm-menu-item ">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý sản phẩm</div>
+                </a>
+
+                <a th:href="@{/admin/customers}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý khách hàng</div>
+                </a>
+
+                <a th:href="@{/admin/accounts}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý Admin</div>
+                </a>
+
+                <a th:href="@{/admin/orders}" class="adm-menu-item">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý đơn hàng</div>
+                </a>
+
+                <a th:href="@{/admin/feedbacks}" class="adm-menu-item adm-menu-item--active">
+                    <div class="adm-menu-icon">
+                        <i class="fa-regular fa-comment-dots"></i>
+                    </div>
+                    <div class="adm-menu-text">Quản lý góp ý</div>
+                </a>
+            </nav>
+
+            <!-- Bottom -->
+            <div class="adm-sidebar-bottom">
+                <a th:href="@{/}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div class="adm-menu-text">Về trang bán hàng</div>
+                </a>
+
+                <a th:href="@{/account/logout}" class="adm-menu-item adm-menu-item--bottom">
+                    <div class="adm-menu-icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <div class="adm-menu-text">Đăng xuất</div>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="adm-main">
+        <header class="adm-main-header">
+            <div>
+                <h1 th:text="${pageTitle}">Chỉnh sửa góp ý</h1>
+                <span class="adm-main-subtitle">
+                    Xem chi tiết và điều chỉnh nội dung đánh giá nếu cần
+                </span>
+            </div>
+        </header>
+
+        <section class="fbf-content-form">
+            <form th:action="@{/admin/feedbacks/save}"
+                  th:object="${review}"
+                  method="post"
+                  class="fbf-form">
+
+                <input type="hidden" th:field="*{id}"/>
+
+                <!-- Thông tin chung -->
+                <div class="fbf-info-row">
+                    <div class="fbf-info-block">
+                        <span class="fbf-info-label">Sản phẩm</span>
+                        <span class="fbf-info-value"
+                              th:text="${review.product != null ? review.product.name : '---'}">
+                            Tên sản phẩm
+                        </span>
+                    </div>
+
+                    <div class="fbf-info-block">
+                        <span class="fbf-info-label">Khách hàng</span>
+                        <span class="fbf-info-value"
+                              th:text="${review.customer != null ?
+                                (review.customer.fullName != null && !review.customer.fullName.isEmpty()
+                                  ? review.customer.fullName : review.customer.username)
+                                  : '---'}">
+                            Tên khách
+                        </span>
+                    </div>
+
+                    <div class="fbf-info-block">
+                        <span class="fbf-info-label">Thời gian</span>
+                        <span class="fbf-info-value"
+                              th:text="${#temporals.format(review.createdAt, 'dd/MM/yyyy HH:mm')}">
+                            12/12/2025 11:30
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Rating -->
+                <div class="fbf-form-group">
+                    <label class="fbf-label">Điểm đánh giá (1 - 5)</label>
+                    <select th:field="*{rating}" class="fbf-input">
+                        <option value="1">1 sao</option>
+                        <option value="2">2 sao</option>
+                        <option value="3">3 sao</option>
+                        <option value="4">4 sao</option>
+                        <option value="5">5 sao</option>
+                    </select>
+                </div>
+
+                <!-- Comment -->
+                <div class="fbf-form-group">
+                    <label class="fbf-label">Nội dung góp ý</label>
+                    <textarea th:field="*{comment}"
+                              rows="4"
+                              class="fbf-textarea"
+                              placeholder="Nội dung góp ý của khách hàng"></textarea>
+                    <span class="fbf-hint">
+                        Nên giữ nguyên ý kiến khách hàng, chỉ chỉnh sửa khi có nội dung không phù hợp.
+                    </span>
+                </div>
+
+                <div class="fbf-actions">
+                    <button type="submit" class="fbf-btn fbf-btn-primary">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Lưu thay đổi</span>
+                    </button>
+
+                    <a th:href="@{/admin/feedbacks}" class="fbf-btn fbf-btn-secondary">
+                        Hủy và quay lại
+                    </a>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

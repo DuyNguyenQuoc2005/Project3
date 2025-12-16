@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Footer</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-M9W8QK8y1wG7+..."
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+</head>
+<body>
+
+<footer class="nqd-footer" th:fragment="nqdFooterFragment">
+    <div class="nqd-footer-content">
+
+        <!-- Cột trái: thông tin + mạng xã hội + thanh toán -->
+        <div class="nqd-footer-left">
+            <h2 class="nqd-footer-title">Liên hệ với chúng tôi</h2>
+
+            <p class="nqd-footer-line">
+                <span class="nqd-footer-icon">📍</span>
+                25 P. Vũ Ngọc Phan, Láng Hạ, Đống Đa, Hà Nội
+            </p>
+            <p class="nqd-footer-line">
+                <span class="nqd-footer-icon">📞</span>
+                (+84) 098-123-000
+            </p>
+            <p class="nqd-footer-line">
+                <span class="nqd-footer-icon">✉️</span>
+                yudnguyen2005@gmail.com
+            </p>
+
+            <!-- THEO DÕI CHÚNG TÔI -->
+            <div class="nqd-footer-social-block">
+                <p class="nqd-footer-subtitle">THEO DÕI CHÚNG TÔI: </p>
+                <div class="nqd-footer-social">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- PHƯƠNG THỨC THANH TOÁN -->
+            <div class="nqd-footer-payments-block">
+                <p class="nqd-footer-subtitle">PHƯƠNG THỨC THANH TOÁN:</p>
+                <div class="nqd-footer-payments">
+                    <img th:src="@{/images/Vnpay.png}"   alt="VNPay">
+                    <img th:src="@{/images/Momo.png}"    alt="MoMo">
+                    <img th:src="@{/images/Zalopay.webp}" alt="ZaloPay">
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột phải: map -->
+        <div class="nqd-footer-map">
+            <iframe
+                    src="https://www.google.com/maps?q=21.0135411,105.81132&z=17&output=embed"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+
+
+    </div>
+
+    <div class="nqd-footer-bottom">
+        <p>© Bản quyền thuộc về NQD.</p>
+    </div>
+</footer>
+
+<script th:src="@{/js/header.js}"></script>
+
+</body>
+</html>

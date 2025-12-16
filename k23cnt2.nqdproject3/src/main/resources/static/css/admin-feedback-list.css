@@ -1,0 +1,129 @@
+.fb-table-wrapper {
+    margin-top: 20px;
+    background-color: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+    padding: 12px 16px 16px;
+}
+
+.fb-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.fb-table thead tr {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    color: #ffffff;
+}
+
+.fb-table th,
+.fb-table td {
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.fb-table tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.fb-table tbody tr:hover {
+    background-color: #fff7ed;
+}
+
+.fb-table-empty {
+    text-align: center;
+    padding: 24px 0;
+    color: #6b7280;
+    font-style: italic;
+}
+
+.fb-product-name {
+    font-weight: 600;
+    color: #111827;
+}
+
+.fb-user-name {
+    font-weight: 500;
+    color: #374151;
+}
+
+/* Rating */
+.fb-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.fb-rating-star {
+    color: #f97316;
+    font-size: 13px;
+}
+
+.fb-rating-text {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Comment */
+.fb-comment {
+    font-size: 13px;
+    color: #4b5563;
+}
+
+.fb-time {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Buttons */
+.fb-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    background-color: #e5e7eb;
+    color: #111827;
+    transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.1s ease;
+}
+
+.fb-btn--sm {
+    font-size: 12px;
+    padding: 5px 9px;
+}
+
+.fb-btn--danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #ffffff;
+}
+
+.fb-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.18);
+}
+
+/* Alert */
+.fb-alert {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+.fb-alert--success {
+    background-color: #ecfdf3;
+    color: #166534;
+}
+
+.fb-alert--error {
+    background-color: #fef2f2;
+    color: #b91c1c;
+}
